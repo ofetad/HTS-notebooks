@@ -1,0 +1,8 @@
+# bubles to rapid (to cifs mount)
+rsync  --omit-dir-times --temp-dir /tmp --progress --stats --recursive  /data/hts/2018/Granek_4837_180427A5  rapiduser@rapid-592.vm.duke.edu:/mnt/hts_scratch/Members/josh/hts2018
+
+# bubbles to vcm3 (to /tmp)
+rsync  -a --progress --stats /data/hts/2018/Granek_4837_180427A5  vcm@vcm-1494.vm.duke.edu:/tmp/hts2018
+
+# pull to hts2017 jupyter from vcm
+rsync  -a --progress --stats vcm@vcm-1494.vm.duke.edu:/tmp/hts2018 /data/hts2018_pilot
