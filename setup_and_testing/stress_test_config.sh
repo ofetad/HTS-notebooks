@@ -1,6 +1,6 @@
 set -u
 export CUROUT=$HOME/work/scratch/2018_stresstest
-export DATA_BASE="/data/hts2018_pilot/"
+export DATA_BASE="/data/hts2018_pilot"
 export RAW_FASTQS="$DATA_BASE/Granek_4837_180427A5"
 # CURDATA_1=$CURDATA
 # export INFO=$HOME/work/myinfo
@@ -22,12 +22,8 @@ export GFF_URL="ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/gff3/fungi_bas
 export GFF=$(basename ${GFF_URL%.gz})
 export GTF=$(basename ${GTF_URL%.gz})
 export FA=$(basename ${FA_URL%.gz})
-export THREADS=10
+export THREADS=1
 export MAX_JOBS=1
 
 # echo $GFF $GTF $FA
-
-# Making New Directories
-mkdir -p $TRIMMED $GENOME_DIR $STAR_OUT
-
 # ls $CURDATA
