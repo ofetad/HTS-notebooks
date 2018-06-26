@@ -2,12 +2,12 @@ set -u
 export CUROUT=$HOME/work/scratch/2018_stresstest
 export DATA_BASE="/data/hts2018_pilot"
 export RAW_FASTQS="$DATA_BASE/Granek_4837_180427A5"
-# CURDATA_1=$CURDATA
-# export INFO=$HOME/work/myinfo
+export INFO="../info"
+export ADAPTERS="$INFO/neb_E7600_adapters_withrc.fasta"
+
 export TRIMMED=$CUROUT/trimmed_fastqs
 export GENOME_DIR=$CUROUT/genome
 export STAR_OUT=$CUROUT/star_out_stress
-export ADAPTERS=$DATA_BASE/neb_E7600_adapters_withrc.fasta
 
 # ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/fungi/Cryptococcus_neoformans/all_assembly_versions/GCF_000149245.1_CNA3
 export ACCESSION="GCF_000149245.1_CNA3"
