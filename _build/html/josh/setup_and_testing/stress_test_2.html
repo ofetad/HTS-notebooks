@@ -1,0 +1,491 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Analyze 2018 Pilot runs in Parallel &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+
+  
+  <script src="../../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html">Docs</a> &raquo;</li>
+        
+      <li>Analyze 2018 Pilot runs in Parallel</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../../_sources/josh/setup_and_testing/stress_test_2.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Analyze-2018-Pilot-runs-in-Parallel">
+<h1>Analyze 2018 Pilot runs in Parallel<a class="headerlink" href="#Analyze-2018-Pilot-runs-in-Parallel" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="Shell-Variables">
+<h2>Shell Variables<a class="headerlink" href="#Shell-Variables" title="Permalink to this headline">¶</a></h2>
+<p>Assign the variables in this notebook.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span><span class="nb">source</span> stress_test_config.sh
+mkdir -p <span class="nv">$TRIMMED</span>
+<span class="c1"># ls $DATA_BASE</span>
+<span class="c1"># ls -lSh $DATA_BASE/Granek_4837_180427A5</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Running-the-full-pipeline-on-all-the-samples">
+<h3>Running the full pipeline on all the samples<a class="headerlink" href="#Running-the-full-pipeline-on-all-the-samples" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-bash notranslate"><div class="highlight"><pre>
+<span></span>trim_func<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">FASTQ</span><span class="o">=</span><span class="nv">$1</span>
+    <span class="nv">FASTQ_BASE</span><span class="o">=</span><span class="si">${</span><span class="nv">FASTQ</span><span class="p">##*/</span><span class="si">}</span> <span class="c1"># strip directory from file path</span>
+    <span class="nv">SAMPLE</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">${</span><span class="nv">FASTQ_BASE</span><span class="p">%_R1_001.fastq.gz</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># strip .fq.gz file extension</span>
+    <span class="nb">echo</span> <span class="nv">$SAMPLE</span>
+    <span class="nb">echo</span> <span class="nv">$FASTQ</span>
+    <span class="nb">echo</span> <span class="nv">$FASTQ_BASE</span>
+    <span class="c1"># exit 1</span>
+
+    fastq-mcf <span class="se">\</span>
+        <span class="nv">$ADAPTERS</span> <span class="se">\</span>
+        <span class="nv">$FASTQ</span> <span class="se">\</span>
+        -o <span class="nv">$TRIMMED</span>/<span class="si">${</span><span class="nv">SAMPLE</span><span class="si">}</span>.trim.fastq.gz <span class="se">\</span>
+        -q <span class="m">20</span> -x <span class="m">0</span>.5
+<span class="o">}</span>
+<span class="nb">export</span> -f trim_func
+
+<span class="c1"># parallel --jobs 1 pipeline_func ::: $RAW_FASTQS/1_MA_*_L001_R1_001.fastq.gz</span>
+<span class="c1"># parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/35_MA_*_L001_R1_001.fastq.gz</span>
+<span class="c1"># parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/*_L001_R1_001.fastq.gz</span>
+<span class="c1"># parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/[3-4]_RZ_*_L001_R1_001.fastq.gz</span>
+parallel --jobs <span class="nv">$MAX_JOBS</span> trim_func ::: <span class="nv">$RAW_FASTQS</span>/4_RZ_P_S43_L003_R1_001.fastq.gz <span class="nv">$RAW_FASTQS</span>/3_TOT_J_S34_L003_R1_001.fastq.gz
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Academic tradition requires you to cite works you base your article on.
+When using programs that use GNU Parallel to process data for publication
+please cite:
+
+  O. Tange (2011): GNU Parallel - The Command-Line Power Tool,
+  ;login: The USENIX Magazine, February 2011:42-47.
+
+This helps funding further development; AND IT WON&#39;T COST YOU A CENT.
+If you pay 10000 EUR you should feel free to use GNU Parallel without citing.
+
+To silence this citation notice: run &#39;parallel --citation&#39;.
+
+4_RZ_P_S43_L003
+/data/hts2018_pilot/Granek_4837_180427A5/4_RZ_P_S43_L003_R1_001.fastq.gz
+4_RZ_P_S43_L003_R1_001.fastq.gz
+Command Line: ../info/neb_E7600_adapters_withrc.fasta /data/hts2018_pilot/Granek_4837_180427A5/4_RZ_P_S43_L003_R1_001.fastq.gz -o /Users/cliburn/work/scratch/2018_stresstest/trimmed_fastqs/4_RZ_P_S43_L003.trim.fastq.gz -q 20 -x 0.5
+Scale used: 2.2
+Phred: 64
+gunzip: can&#39;t stat: /data/hts2018_pilot/Granek_4837_180427A5/4_RZ_P_S43_L003_R1_001.fastq.gz (/data/hts2018_pilot/Granek_4837_180427A5/4_RZ_P_S43_L003_R1_001.fastq.gz.gz): No such file or directory
+No records in file /data/hts2018_pilot/Granek_4837_180427A5/4_RZ_P_S43_L003_R1_001.fastq.gz
+3_TOT_J_S34_L003
+/data/hts2018_pilot/Granek_4837_180427A5/3_TOT_J_S34_L003_R1_001.fastq.gz
+3_TOT_J_S34_L003_R1_001.fastq.gz
+Command Line: ../info/neb_E7600_adapters_withrc.fasta /data/hts2018_pilot/Granek_4837_180427A5/3_TOT_J_S34_L003_R1_001.fastq.gz -o /Users/cliburn/work/scratch/2018_stresstest/trimmed_fastqs/3_TOT_J_S34_L003.trim.fastq.gz -q 20 -x 0.5
+Scale used: 2.2
+Phred: 64
+gunzip: can&#39;t stat: /data/hts2018_pilot/Granek_4837_180427A5/3_TOT_J_S34_L003_R1_001.fastq.gz (/data/hts2018_pilot/Granek_4837_180427A5/3_TOT_J_S34_L003_R1_001.fastq.gz.gz): No such file or directory
+No records in file /data/hts2018_pilot/Granek_4837_180427A5/3_TOT_J_S34_L003_R1_001.fastq.gz
+</pre></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+</pre></div></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../../_static/jquery.js"></script>
+      <script type="text/javascript" src="../../_static/underscore.js"></script>
+      <script type="text/javascript" src="../../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

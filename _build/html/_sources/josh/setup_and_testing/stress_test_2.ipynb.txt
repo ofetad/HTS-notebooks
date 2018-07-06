@@ -1,0 +1,78 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Analyze 2018 Pilot runs in Parallel\n",
+    "\n",
+    "## Shell Variables\n",
+    "Assign the variables in this notebook."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "source stress_test_config.sh\n",
+    "mkdir -p $TRIMMED\n",
+    "# ls $DATA_BASE\n",
+    "# ls -lSh $DATA_BASE/Granek_4837_180427A5"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Running the full pipeline on all the samples"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "trim_func() {\n",
+    "    FASTQ=$1\n",
+    "    FASTQ_BASE=${FASTQ##*/} # strip directory from file path\n",
+    "    SAMPLE=\"${FASTQ_BASE%_R1_001.fastq.gz}\" # strip .fq.gz file extension\n",
+    "    echo $SAMPLE\n",
+    "    echo $FASTQ\n",
+    "    echo $FASTQ_BASE\n",
+    "    # exit 1\n",
+    "\n",
+    "    fastq-mcf \\\n",
+    "        $ADAPTERS \\\n",
+    "        $FASTQ \\\n",
+    "        -o $TRIMMED/${SAMPLE}.trim.fastq.gz \\\n",
+    "        -q 20 -x 0.5\n",
+    "}\n",
+    "export -f trim_func\n",
+    "\n",
+    "# parallel --jobs 1 pipeline_func ::: $RAW_FASTQS/1_MA_*_L001_R1_001.fastq.gz\n",
+    "# parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/35_MA_*_L001_R1_001.fastq.gz\n",
+    "# parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/*_L001_R1_001.fastq.gz\n",
+    "# parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/[3-4]_RZ_*_L001_R1_001.fastq.gz\n",
+    "parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/4_RZ_P_S43_L003_R1_001.fastq.gz $RAW_FASTQS/3_TOT_J_S34_L003_R1_001.fastq.gz\n"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Bash",
+   "language": "bash",
+   "name": "bash"
+  },
+  "language_info": {
+   "codemirror_mode": "shell",
+   "file_extension": ".sh",
+   "mimetype": "text/x-sh",
+   "name": "bash"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

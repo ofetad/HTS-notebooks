@@ -1,0 +1,460 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import os\n",
+    "import glob"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import pandas as pd"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "data_dir = '/data/hts/2018/foot'"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fs = glob.glob(os.path.join(data_dir, '*.tab'))"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "from functools import reduce"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "d = {}\n",
+    "\n",
+    "for f in fs[0:]:\n",
+    "    path, filename = os.path.split(f)\n",
+    "    name, ext = os.path.splitext(filename)\n",
+    "    sid, method, person, _, lane, _, _ = name.split('_')\n",
+    "    d.setdefault((sid, method, person), []).append(filename)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "dfs = []\n",
+    "for key in d:\n",
+    "    dfs_ = []\n",
+    "    for filename in sorted(d[key]):\n",
+    "        df_ = pd.read_table(os.path.join(data_dir, filename), header=None, skiprows=4)\n",
+    "        df_.columns = ['gene', 'a', 'b', 'c']\n",
+    "        df_ = df_.iloc[:, [0,3]]\n",
+    "        dfs_.append(df_)\n",
+    "    sid, method, person = key\n",
+    "    df = reduce(lambda left,right: pd.merge(left, right, on='gene'), dfs_)\n",
+    "    df['count'] = df.sum(axis=1)\n",
+    "    df['sid'] = sid\n",
+    "    df = df[['sid', 'gene', 'count']]\n",
+    "    df = df.pivot('sid', 'gene', 'count')\n",
+    "    df['person'] = person\n",
+    "    df['method'] = method\n",
+    "    df.reset_index(level=0, inplace=True)\n",
+    "    dfs.append(df)\n",
+    "df_all = pd.concat(dfs)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th>gene</th>\n",
+       "      <th>sid</th>\n",
+       "      <th>gene0</th>\n",
+       "      <th>gene1</th>\n",
+       "      <th>gene10</th>\n",
+       "      <th>gene100</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>9</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>11</td>\n",
+       "      <td>186</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>27</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>1</td>\n",
+       "      <td>72</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>36</td>\n",
+       "      <td>1</td>\n",
+       "      <td>0</td>\n",
+       "      <td>9</td>\n",
+       "      <td>192</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>0</td>\n",
+       "      <td>7</td>\n",
+       "      <td>168</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>45</td>\n",
+       "      <td>3</td>\n",
+       "      <td>0</td>\n",
+       "      <td>21</td>\n",
+       "      <td>162</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "gene sid  gene0  gene1  gene10  gene100\n",
+       "0      9      0      0      11      186\n",
+       "0     27      0      0       1       72\n",
+       "0     36      1      0       9      192\n",
+       "0      3      0      0       7      168\n",
+       "0     45      3      0      21      162"
+      ]
+     },
+     "execution_count": 8,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "df_all.iloc[:5,:5]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all = df_all[df_all.columns[0:1].tolist() + df_all.columns[-2:] .tolist() + df_all.columns[1:-2].tolist()]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all['sid'] = df_all['sid'].astype('int')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all = df_all.sort_values(['sid', 'person', 'method'])"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all['Label'] = df_all['sid'].astype('str') + '_' + df_all['method'] + '_' + df_all['person'] "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 13,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "meta = pd.read_table('../josh/info/2018_pilot_metadata.tsv')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 14,
+   "metadata": {},
+   "outputs": [
+    {
+     "data": {
+      "text/html": [
+       "<div>\n",
+       "<style scoped>\n",
+       "    .dataframe tbody tr th:only-of-type {\n",
+       "        vertical-align: middle;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe tbody tr th {\n",
+       "        vertical-align: top;\n",
+       "    }\n",
+       "\n",
+       "    .dataframe thead th {\n",
+       "        text-align: right;\n",
+       "    }\n",
+       "</style>\n",
+       "<table border=\"1\" class=\"dataframe\">\n",
+       "  <thead>\n",
+       "    <tr style=\"text-align: right;\">\n",
+       "      <th></th>\n",
+       "      <th>Label</th>\n",
+       "      <th>RNA_sample_num</th>\n",
+       "      <th>Media</th>\n",
+       "      <th>Strain</th>\n",
+       "      <th>Replicate</th>\n",
+       "      <th>experiment_person</th>\n",
+       "      <th>libprep_person</th>\n",
+       "      <th>enrichment_method</th>\n",
+       "      <th>RIN</th>\n",
+       "      <th>concentration_fold_difference</th>\n",
+       "      <th>i7 index</th>\n",
+       "      <th>i5 index</th>\n",
+       "      <th>i5 primer</th>\n",
+       "      <th>i7 primer</th>\n",
+       "      <th>library#</th>\n",
+       "    </tr>\n",
+       "  </thead>\n",
+       "  <tbody>\n",
+       "    <tr>\n",
+       "      <th>0</th>\n",
+       "      <td>2_MA_C</td>\n",
+       "      <td>2</td>\n",
+       "      <td>YPD</td>\n",
+       "      <td>H99</td>\n",
+       "      <td>2</td>\n",
+       "      <td>expA</td>\n",
+       "      <td>prepA</td>\n",
+       "      <td>MA</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>1.34</td>\n",
+       "      <td>ATTACTCG</td>\n",
+       "      <td>AGGCTATA</td>\n",
+       "      <td>i501</td>\n",
+       "      <td>i701</td>\n",
+       "      <td>1</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>1</th>\n",
+       "      <td>9_MA_C</td>\n",
+       "      <td>9</td>\n",
+       "      <td>YPD</td>\n",
+       "      <td>mar1d</td>\n",
+       "      <td>3</td>\n",
+       "      <td>expA</td>\n",
+       "      <td>prepA</td>\n",
+       "      <td>MA</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>2.23</td>\n",
+       "      <td>ATTACTCG</td>\n",
+       "      <td>GCCTCTAT</td>\n",
+       "      <td>i502</td>\n",
+       "      <td>i701</td>\n",
+       "      <td>2</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>2</th>\n",
+       "      <td>10_MA_C</td>\n",
+       "      <td>10</td>\n",
+       "      <td>YPD</td>\n",
+       "      <td>mar1d</td>\n",
+       "      <td>4</td>\n",
+       "      <td>expA</td>\n",
+       "      <td>prepA</td>\n",
+       "      <td>MA</td>\n",
+       "      <td>9.9</td>\n",
+       "      <td>4.37</td>\n",
+       "      <td>ATTACTCG</td>\n",
+       "      <td>AGGATAGG</td>\n",
+       "      <td>i503</td>\n",
+       "      <td>i701</td>\n",
+       "      <td>3</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>3</th>\n",
+       "      <td>14_MA_C</td>\n",
+       "      <td>14</td>\n",
+       "      <td>TC</td>\n",
+       "      <td>H99</td>\n",
+       "      <td>2</td>\n",
+       "      <td>expA</td>\n",
+       "      <td>prepA</td>\n",
+       "      <td>MA</td>\n",
+       "      <td>10.0</td>\n",
+       "      <td>1.57</td>\n",
+       "      <td>ATTACTCG</td>\n",
+       "      <td>TCAGAGCC</td>\n",
+       "      <td>i504</td>\n",
+       "      <td>i701</td>\n",
+       "      <td>4</td>\n",
+       "    </tr>\n",
+       "    <tr>\n",
+       "      <th>4</th>\n",
+       "      <td>15_MA_C</td>\n",
+       "      <td>15</td>\n",
+       "      <td>TC</td>\n",
+       "      <td>H99</td>\n",
+       "      <td>3</td>\n",
+       "      <td>expA</td>\n",
+       "      <td>prepA</td>\n",
+       "      <td>MA</td>\n",
+       "      <td>9.9</td>\n",
+       "      <td>2.85</td>\n",
+       "      <td>ATTACTCG</td>\n",
+       "      <td>CTTCGCCT</td>\n",
+       "      <td>i505</td>\n",
+       "      <td>i701</td>\n",
+       "      <td>5</td>\n",
+       "    </tr>\n",
+       "  </tbody>\n",
+       "</table>\n",
+       "</div>"
+      ],
+      "text/plain": [
+       "     Label  RNA_sample_num Media Strain  Replicate experiment_person  \\\n",
+       "0   2_MA_C               2   YPD    H99          2              expA   \n",
+       "1   9_MA_C               9   YPD  mar1d          3              expA   \n",
+       "2  10_MA_C              10   YPD  mar1d          4              expA   \n",
+       "3  14_MA_C              14    TC    H99          2              expA   \n",
+       "4  15_MA_C              15    TC    H99          3              expA   \n",
+       "\n",
+       "  libprep_person enrichment_method   RIN  concentration_fold_difference  \\\n",
+       "0          prepA                MA  10.0                           1.34   \n",
+       "1          prepA                MA  10.0                           2.23   \n",
+       "2          prepA                MA   9.9                           4.37   \n",
+       "3          prepA                MA  10.0                           1.57   \n",
+       "4          prepA                MA   9.9                           2.85   \n",
+       "\n",
+       "   i7 index  i5 index i5 primer i7 primer  library#  \n",
+       "0  ATTACTCG  AGGCTATA      i501      i701         1  \n",
+       "1  ATTACTCG  GCCTCTAT      i502      i701         2  \n",
+       "2  ATTACTCG  AGGATAGG      i503      i701         3  \n",
+       "3  ATTACTCG  TCAGAGCC      i504      i701         4  \n",
+       "4  ATTACTCG  CTTCGCCT      i505      i701         5  "
+      ]
+     },
+     "execution_count": 14,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "meta.head()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 15,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all = pd.merge(df_all, meta[['Label', 'Media', 'Strain']], on='Label', how='inner')"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 16,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "cols = df_all.columns[:3].tolist() + df_all.columns[-3:].tolist() + df_all.columns[3:-3].tolist()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 17,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all = df_all[cols]"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 18,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "df_all.to_csv('data/gene_counts.txt', sep='\\t', index=False)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.3"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
