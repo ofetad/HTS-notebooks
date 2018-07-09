@@ -1,0 +1,1592 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Using dplyr for data manipulation &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Using <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> for data manipulation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cliburn/R_tidyverse_1.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Using-dplyr-for-data-manipulation">
+<h1>Using <code class="docutils literal notranslate"><span class="pre">dplyr</span></code> for data manipulation<a class="headerlink" href="#Using-dplyr-for-data-manipulation" title="Permalink to this headline">¶</a></h1>
+<p><strong>Description</strong></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>dplyr provides a flexible grammar of data manipulation. It’s the next iteration of plyr, focused on tools for working with data frames (hence the d in the name).
+</pre></div>
+</div>
+<p>If you look at <code class="docutils literal notranslate"><span class="pre">`dplyr</span></code>
+docs &lt;<a class="reference external" href="https://cran.r-project.org/web/packages/dplyr/dplyr.pdf">https://cran.r-project.org/web/packages/dplyr/dplyr.pdf</a>&gt;`__, there
+is a rich collection of data manipulaiton verbs provided. However, most
+common tasks can be accomplished with just 6 verbs that we will cover in
+this session:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">select</span>
+<span class="nb">filter</span>
+<span class="n">mutate</span> <span class="n">a</span>
+<span class="n">arrange</span>
+<span class="n">summarize</span>
+<span class="n">group_by</span>
+</pre></div>
+</div>
+<p>We will also see how to construct data manipulation “sentnces” by using
+these versb togetehr wtih <code class="docutils literal notranslate"><span class="pre">pipes</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 2.2.1     ✔ purrr   0.2.5
+✔ tibble  1.4.2     ✔ dplyr   0.7.5
+✔ tidyr   0.8.1     ✔ stringr 1.3.1
+✔ readr   1.1.1     ✔ forcats 0.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+</pre></div></div>
+</div>
+<div class="section" id="Data">
+<h2>Data<a class="headerlink" href="#Data" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>path<span class="o">=</span><span class="s">&#39;../josh/info/2018_pilot_metadata.tsv&#39;</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">&lt;-</span> read_tsv<span class="p">(</span>path<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  Label = col_character(),
+  RNA_sample_num = col_integer(),
+  Media = col_character(),
+  Strain = col_character(),
+  Replicate = col_integer(),
+  experiment_person = col_character(),
+  libprep_person = col_character(),
+  enrichment_method = col_character(),
+  RIN = col_double(),
+  concentration_fold_difference = col_double(),
+  `i7 index` = col_character(),
+  `i5 index` = col_character(),
+  `i5 primer` = col_character(),
+  `i7 primer` = col_character(),
+  `library#` = col_integer()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [4]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">names</span><span class="p">(</span>df<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>'Label'</li>
+    <li>'RNA_sample_num'</li>
+    <li>'Media'</li>
+    <li>'Strain'</li>
+    <li>'Replicate'</li>
+    <li>'experiment_person'</li>
+    <li>'libprep_person'</li>
+    <li>'enrichment_method'</li>
+    <li>'RIN'</li>
+    <li>'concentration_fold_difference'</li>
+    <li>'i7 index'</li>
+    <li>'i5 index'</li>
+    <li>'i5 primer'</li>
+    <li>'i7 primer'</li>
+    <li>'library#'</li>
+</ol></div>
+</div>
+<div class="section" id="Fix-nmaes-to-be-consistent">
+<h3>Fix nmaes to be consistent<a class="headerlink" href="#Fix-nmaes-to-be-consistent" title="Permalink to this headline">¶</a></h3>
+<p>Note that some names use spaces between words and others use
+underscores. Le’ts finx this.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [5]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">names</span><span class="p">(</span>df<span class="p">)</span> <span class="o">&lt;-</span> str_replace_all<span class="p">(</span><span class="kp">names</span><span class="p">(</span>df<span class="p">),</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;[:space:]+&#39;</span> <span class="o">=</span> <span class="s">&#39;_&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [6]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">names</span><span class="p">(</span>df<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>'Label'</li>
+    <li>'RNA_sample_num'</li>
+    <li>'Media'</li>
+    <li>'Strain'</li>
+    <li>'Replicate'</li>
+    <li>'experiment_person'</li>
+    <li>'libprep_person'</li>
+    <li>'enrichment_method'</li>
+    <li>'RIN'</li>
+    <li>'concentration_fold_difference'</li>
+    <li>'i7_index'</li>
+    <li>'i5_index'</li>
+    <li>'i5_primer'</li>
+    <li>'i7_primer'</li>
+    <li>'library#'</li>
+</ol></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [7]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">dim</span><span class="p">(</span>df<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>51</li>
+    <li>15</li>
+</ol></div>
+</div>
+<p>Note: Drop some columns so table fits in browser</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [8]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">&lt;-</span> df<span class="p">[,</span> <span class="kt">c</span><span class="p">(</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">,</span> <span class="m">8</span><span class="o">:</span><span class="m">15</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">dim</span><span class="p">(</span>df<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>51</li>
+    <li>12</li>
+</ol></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>sample_n<span class="p">(</span>df<span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>27      </td><td>YPD     </td><td>H99     </td><td> 9      </td><td>RZ      </td><td>10.0    </td><td>3.57    </td><td>GAATTCGT</td><td>TCAGAGCC</td><td>i504    </td><td>i706    </td><td>46      </td></tr>
+    <tr><td>26      </td><td>YPD     </td><td>H99     </td><td> 8      </td><td>MA      </td><td>10.0    </td><td>2.76    </td><td>ATTACTCG</td><td>GTCAGTAC</td><td>i508    </td><td>i701    </td><td> 8      </td></tr>
+    <tr><td>36      </td><td>YPD     </td><td>mar1d   </td><td>12      </td><td>MA      </td><td> 9.7    </td><td>3.70    </td><td>CGCTCATT</td><td>ACGTCCTG</td><td>i507    </td><td>i703    </td><td>24      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [11]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">summary</span><span class="p">(</span>df<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area highlight-none notranslate"><div class="highlight"><pre>
+<span></span>RNA_sample_num     Media              Strain            Replicate
+ Min.   : 1.00   Length:51          Length:51          Min.   : 1.000
+ 1st Qu.: 9.50   Class :character   Class :character   1st Qu.: 3.000
+ Median :16.00   Mode  :character   Mode  :character   Median : 4.000
+ Mean   :19.55                                         Mean   : 5.431
+ 3rd Qu.:27.00                                         3rd Qu.: 8.000
+ Max.   :47.00                                         Max.   :12.000
+ enrichment_method       RIN         concentration_fold_difference
+ Length:51          Min.   : 6.200   Min.   :1.340
+ Class :character   1st Qu.: 9.900   1st Qu.:2.010
+ Mode  :character   Median :10.000   Median :2.850
+                    Mean   : 9.776   Mean   :2.892
+                    3rd Qu.:10.000   3rd Qu.:3.640
+                    Max.   :10.000   Max.   :5.530
+   i7_index           i5_index          i5_primer          i7_primer
+ Length:51          Length:51          Length:51          Length:51
+ Class :character   Class :character   Class :character   Class :character
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character
+
+
+
+    library#
+ Min.   : 1.0
+ 1st Qu.:13.5
+ Median :26.0
+ Mean   :26.0
+ 3rd Qu.:38.5
+ Max.   :51.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Fixing-fake-numeric-columns">
+<h3>Fixing fake numeric columns<a class="headerlink" href="#Fixing-fake-numeric-columns" title="Permalink to this headline">¶</a></h3>
+<p>Note that <code class="docutils literal notranslate"><span class="pre">RNA_sample_num</span></code>, <code class="docutils literal notranslate"><span class="pre">Replicate</span></code> and <code class="docutils literal notranslate"><span class="pre">library#</span></code> are really
+discrete <code class="docutils literal notranslate"><span class="pre">factors</span></code> rather than numbrs. As <code class="docutils literal notranslate"><span class="pre">#</span></code> is not allowed in an R
+variable name, we need to use backticks for <code class="docutils literal notranslate"><span class="pre">library#</span></code>.
+(Alternatively, we cna reame to something like <code class="docutils literal notranslate"><span class="pre">library_num</span></code>).</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [12]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> mutate<span class="p">(</span>
+    RNA_sample_num<span class="o">=</span><span class="kp">factor</span><span class="p">(</span>RNA_sample_num<span class="p">),</span>
+    Replicate<span class="o">=</span><span class="kp">factor</span><span class="p">(</span>Replicate<span class="p">),</span>
+    <span class="sb">`library#`</span><span class="o">=</span><span class="kp">factor</span><span class="p">(</span><span class="sb">`library#`</span><span class="p">)</span>
+<span class="p">)</span> <span class="o">%&gt;%</span>
+select_if<span class="p">(</span><span class="kp">is.factor</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">names</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>'RNA_sample_num'</li>
+    <li>'Replicate'</li>
+    <li>'library#'</li>
+</ol></div>
+</div>
+<p>After checking that the transformation worked, we can save the
+transformed data.frame.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [13]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">&lt;-</span> df <span class="o">%&gt;%</span> mutate<span class="p">(</span>
+    RNA_sample_num<span class="o">=</span><span class="kp">factor</span><span class="p">(</span>RNA_sample_num<span class="p">),</span>
+    Replicate<span class="o">=</span><span class="kp">factor</span><span class="p">(</span>Replicate<span class="p">),</span>
+    <span class="sb">`library#`</span><span class="o">=</span><span class="kp">factor</span><span class="p">(</span><span class="sb">`library#`</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="0.-Pipe">
+<h2>0. Pipe<a class="headerlink" href="#0.-Pipe" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">tail</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>26      </td><td>YPD     </td><td>H99     </td><td>8       </td><td>MA      </td><td>10      </td><td>2.76    </td><td>ATTACTCG</td><td>GTCAGTAC</td><td>i508    </td><td>i701    </td><td>8       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>RZ      </td><td>10      </td><td>1.34    </td><td>TCCGGAGA</td><td>AGGCTATA</td><td>i501    </td><td>i702    </td><td>9       </td></tr>
+    <tr><td>9       </td><td>YPD     </td><td>mar1d   </td><td>3       </td><td>RZ      </td><td>10      </td><td>2.23    </td><td>TCCGGAGA</td><td>GCCTCTAT</td><td>i502    </td><td>i702    </td><td>10      </td></tr>
+</tbody>
+</table></div>
+</div>
+<p>Note that the above result can also be achieved with <code class="docutils literal notranslate"><span class="pre">slice</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [15]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> slice<span class="p">(</span><span class="m">8</span><span class="o">:</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>26      </td><td>YPD     </td><td>H99     </td><td>8       </td><td>MA      </td><td>10      </td><td>2.76    </td><td>ATTACTCG</td><td>GTCAGTAC</td><td>i508    </td><td>i701    </td><td>8       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>RZ      </td><td>10      </td><td>1.34    </td><td>TCCGGAGA</td><td>AGGCTATA</td><td>i501    </td><td>i702    </td><td>9       </td></tr>
+    <tr><td>9       </td><td>YPD     </td><td>mar1d   </td><td>3       </td><td>RZ      </td><td>10      </td><td>2.23    </td><td>TCCGGAGA</td><td>GCCTCTAT</td><td>i502    </td><td>i702    </td><td>10      </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="1.-Select-columns">
+<h2>1. Select columns<a class="headerlink" href="#1.-Select-columns" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [16]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th></tr></thead>
+<tbody>
+    <tr><td>2    </td><td>YPD  </td><td>H99  </td></tr>
+    <tr><td>9    </td><td>YPD  </td><td>mar1d</td></tr>
+    <tr><td>10   </td><td>YPD  </td><td>mar1d</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [17]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">,</span><span class="m">5</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Strain</th><th scope=col>enrichment_method</th></tr></thead>
+<tbody>
+    <tr><td>2    </td><td>H99  </td><td>MA   </td></tr>
+    <tr><td>9    </td><td>mar1d</td><td>MA   </td></tr>
+    <tr><td>10   </td><td>mar1d</td><td>MA   </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [18]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;RNA_sample_num&#39;</span><span class="p">,</span> <span class="s">&#39;Media&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th></tr></thead>
+<tbody>
+    <tr><td>2  </td><td>YPD</td></tr>
+    <tr><td>9  </td><td>YPD</td></tr>
+    <tr><td>10 </td><td>YPD</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="Dropping-columns">
+<h3>Dropping columns<a class="headerlink" href="#Dropping-columns" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [19]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span><span class="o">-</span><span class="p">((</span><span class="m">1</span><span class="o">:</span><span class="m">10</span><span class="p">)))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>i701</td><td>1   </td></tr>
+    <tr><td>i701</td><td>2   </td></tr>
+    <tr><td>i701</td><td>3   </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Selecting-using-string-operations">
+<h3>Selecting using string operations<a class="headerlink" href="#Selecting-using-string-operations" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span>ends_with<span class="p">(</span><span class="s">&#39;person&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [21]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span>starts_with<span class="p">(</span><span class="s">&#39;i&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th></tr></thead>
+<tbody>
+    <tr><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td></tr>
+    <tr><td>ATTACTCG</td><td>GCCTCTAT</td><td>i502    </td><td>i701    </td></tr>
+    <tr><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span>contains<span class="p">(</span><span class="s">&#39;primer&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>i5_primer</th><th scope=col>i7_primer</th></tr></thead>
+<tbody>
+    <tr><td>i501</td><td>i701</td></tr>
+    <tr><td>i502</td><td>i701</td></tr>
+    <tr><td>i503</td><td>i701</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select<span class="p">(</span>matches<span class="p">(</span><span class="s">&#39;.*_.*&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>enrichment_method</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>MA      </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td></tr>
+    <tr><td>9       </td><td>MA      </td><td>2.23    </td><td>ATTACTCG</td><td>GCCTCTAT</td><td>i502    </td><td>i701    </td></tr>
+    <tr><td>10      </td><td>MA      </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Renaming-columns-with-select">
+<h3>Renaming columns with select<a class="headerlink" href="#Renaming-columns-with-select" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [24]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+select<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;method&#39;</span> <span class="o">=</span> <span class="s">&#39;enrichment_method&#39;</span><span class="p">,</span>
+         <span class="s">&#39;fold.change&#39;</span> <span class="o">=</span>  <span class="s">&#39;concentration_fold_difference&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>method</th><th scope=col>fold.change</th></tr></thead>
+<tbody>
+    <tr><td>MA  </td><td>1.34</td></tr>
+    <tr><td>MA  </td><td>2.23</td></tr>
+    <tr><td>MA  </td><td>4.37</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Scoped-variants">
+<h3>Scoped variants<a class="headerlink" href="#Scoped-variants" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [25]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th></tr></thead>
+<tbody>
+    <tr><td>10.0</td><td>1.34</td></tr>
+    <tr><td>10.0</td><td>2.23</td></tr>
+    <tr><td> 9.9</td><td>4.37</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+select_at<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;enrichment_method&#39;</span><span class="p">,</span>
+            <span class="s">&#39;concentration_fold_difference&#39;</span><span class="p">),</span> <span class="kp">toupper</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>ENRICHMENT_METHOD</th><th scope=col>CONCENTRATION_FOLD_DIFFERENCE</th></tr></thead>
+<tbody>
+    <tr><td>MA  </td><td>1.34</td></tr>
+    <tr><td>MA  </td><td>2.23</td></tr>
+    <tr><td>MA  </td><td>4.37</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [27]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> select_all<span class="p">(</span><span class="kp">tolower</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>rna_sample_num</th><th scope=col>media</th><th scope=col>strain</th><th scope=col>replicate</th><th scope=col>enrichment_method</th><th scope=col>rin</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>MA      </td><td>10.0    </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td><td>1       </td></tr>
+    <tr><td>9       </td><td>YPD     </td><td>mar1d   </td><td>3       </td><td>MA      </td><td>10.0    </td><td>2.23    </td><td>ATTACTCG</td><td>GCCTCTAT</td><td>i502    </td><td>i701    </td><td>2       </td></tr>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="section" id="2.-Filter-rows">
+<h2>2. Filter rows<a class="headerlink" href="#2.-Filter-rows" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [28]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">unique</span><span class="p">(</span>df<span class="o">$</span>Media<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<ol class=list-inline>
+    <li>'YPD'</li>
+    <li>'TC'</li>
+</ol></div>
+</div>
+<div class="section" id="Equality-and-inequality-conditions">
+<h3>Equality and inequality conditions<a class="headerlink" href="#Equality-and-inequality-conditions" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> filter<span class="p">(</span>Media <span class="o">==</span> <span class="s">&#39;TC&#39;</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>14      </td><td>TC      </td><td>H99     </td><td>2       </td><td>MA      </td><td>10.0    </td><td>1.57    </td><td>ATTACTCG</td><td>TCAGAGCC</td><td>i504    </td><td>i701    </td><td>4       </td></tr>
+    <tr><td>15      </td><td>TC      </td><td>H99     </td><td>3       </td><td>MA      </td><td> 9.9    </td><td>2.85    </td><td>ATTACTCG</td><td>CTTCGCCT</td><td>i505    </td><td>i701    </td><td>5       </td></tr>
+    <tr><td>21      </td><td>TC      </td><td>mar1d   </td><td>3       </td><td>MA      </td><td>10.0    </td><td>1.81    </td><td>ATTACTCG</td><td>TAAGATTA</td><td>i506    </td><td>i701    </td><td>6       </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [30]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> filter<span class="p">(</span>concentration_fold_difference <span class="o">&gt;</span> <span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>RZ      </td><td> 9.9    </td><td>4.37    </td><td>TCCGGAGA</td><td>AGGATAGG</td><td>i503    </td><td>i702    </td><td>11      </td></tr>
+    <tr><td>1       </td><td>YPD     </td><td>H99     </td><td>1       </td><td>MA      </td><td>10.0    </td><td>3.64    </td><td>CGCTCATT</td><td>AGGCTATA</td><td>i501    </td><td>i703    </td><td>18      </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Combining-conditions">
+<h3>Combining conditions<a class="headerlink" href="#Combining-conditions" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [31]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+filter<span class="p">(</span>Media <span class="o">!=</span> <span class="s">&#39;TC&#39;</span><span class="p">,</span>
+       concentration_fold_difference <span class="o">&gt;</span> <span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>RZ      </td><td> 9.9    </td><td>4.37    </td><td>TCCGGAGA</td><td>AGGATAGG</td><td>i503    </td><td>i702    </td><td>11      </td></tr>
+    <tr><td>1       </td><td>YPD     </td><td>H99     </td><td>1       </td><td>MA      </td><td>10.0    </td><td>3.64    </td><td>CGCTCATT</td><td>AGGCTATA</td><td>i501    </td><td>i703    </td><td>18      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [32]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+filter<span class="p">(</span>Media <span class="o">==</span> <span class="s">&#39;TC&#39;</span> <span class="o">|</span>
+       concentration_fold_difference <span class="o">&gt;</span> <span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+    <tr><td>14      </td><td>TC      </td><td>H99     </td><td>2       </td><td>MA      </td><td>10.0    </td><td>1.57    </td><td>ATTACTCG</td><td>TCAGAGCC</td><td>i504    </td><td>i701    </td><td>4       </td></tr>
+    <tr><td>15      </td><td>TC      </td><td>H99     </td><td>3       </td><td>MA      </td><td> 9.9    </td><td>2.85    </td><td>ATTACTCG</td><td>CTTCGCCT</td><td>i505    </td><td>i701    </td><td>5       </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Filtering-on-string-conditions">
+<h3>Filtering on string conditions<a class="headerlink" href="#Filtering-on-string-conditions" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> filter<span class="p">(</span>str_length<span class="p">(</span>Media<span class="p">)</span> <span class="o">==</span> <span class="m">3</span><span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>MA      </td><td>10.0    </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td><td>1       </td></tr>
+    <tr><td>9       </td><td>YPD     </td><td>mar1d   </td><td>3       </td><td>MA      </td><td>10.0    </td><td>2.23    </td><td>ATTACTCG</td><td>GCCTCTAT</td><td>i502    </td><td>i701    </td><td>2       </td></tr>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [34]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> filter<span class="p">(</span>str_detect<span class="p">(</span>i7_index<span class="p">,</span> <span class="s">&#39;^A.+&#39;</span><span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>MA      </td><td>10.0    </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td><td>1       </td></tr>
+    <tr><td>9       </td><td>YPD     </td><td>mar1d   </td><td>3       </td><td>MA      </td><td>10.0    </td><td>2.23    </td><td>ATTACTCG</td><td>GCCTCTAT</td><td>i502    </td><td>i701    </td><td>2       </td></tr>
+    <tr><td>10      </td><td>YPD     </td><td>mar1d   </td><td>4       </td><td>MA      </td><td> 9.9    </td><td>4.37    </td><td>ATTACTCG</td><td>AGGATAGG</td><td>i503    </td><td>i701    </td><td>3       </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="section" id="3.-Arrange-in-ascending-or-descening-order">
+<h2>3. Arrange in ascending or descening order<a class="headerlink" href="#3.-Arrange-in-ascending-or-descening-order" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [35]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> arrange<span class="p">(</span>concentration_fold_difference<span class="p">)</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>MA      </td><td>10      </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td><td>1       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>RZ      </td><td>10      </td><td>1.34    </td><td>TCCGGAGA</td><td>AGGCTATA</td><td>i501    </td><td>i702    </td><td>9       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>TOT     </td><td>10      </td><td>1.34    </td><td>CTGAAGCT</td><td>AGGCTATA</td><td>i501    </td><td>i707    </td><td>17      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [36]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> arrange<span class="p">(</span>desc<span class="p">(</span>concentration_fold_difference<span class="p">))</span> <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>24      </td><td>TC      </td><td>mar1d   </td><td>6       </td><td>MA      </td><td>10.0    </td><td>5.53    </td><td>CGCTCATT</td><td>TAAGATTA</td><td>i506    </td><td>i703    </td><td>23      </td></tr>
+    <tr><td>24      </td><td>TC      </td><td>mar1d   </td><td>6       </td><td>RZ      </td><td>10.0    </td><td>5.53    </td><td>GAGATTCC</td><td>TAAGATTA</td><td>i506    </td><td>i704    </td><td>31      </td></tr>
+    <tr><td>23      </td><td>TC      </td><td>mar1d   </td><td>5       </td><td>MA      </td><td> 9.9    </td><td>4.47    </td><td>CGCTCATT</td><td>CTTCGCCT</td><td>i505    </td><td>i703    </td><td>22      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [37]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+arrange<span class="p">(</span>Replicate<span class="p">,</span>
+        desc<span class="p">(</span>concentration_fold_difference<span class="p">))</span><span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>1       </td><td>YPD     </td><td>H99     </td><td>1       </td><td>MA      </td><td>10      </td><td>3.64    </td><td>CGCTCATT</td><td>AGGCTATA</td><td>i501    </td><td>i703    </td><td>18      </td></tr>
+    <tr><td>1       </td><td>YPD     </td><td>H99     </td><td>1       </td><td>RZ      </td><td>10      </td><td>3.64    </td><td>GAGATTCC</td><td>AGGCTATA</td><td>i501    </td><td>i704    </td><td>26      </td></tr>
+    <tr><td>13      </td><td>TC      </td><td>H99     </td><td>1       </td><td>MA      </td><td>10      </td><td>1.95    </td><td>CGCTCATT</td><td>TCAGAGCC</td><td>i504    </td><td>i703    </td><td>21      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="Using-top_n">
+<h3>Using <code class="docutils literal notranslate"><span class="pre">top_n</span></code><a class="headerlink" href="#Using-top_n" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [38]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> top_n<span class="p">(</span><span class="m">3</span><span class="p">,</span> concentration_fold_difference<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>23      </td><td>TC      </td><td>mar1d   </td><td>5       </td><td>MA      </td><td> 9.9    </td><td>4.47    </td><td>CGCTCATT</td><td>CTTCGCCT</td><td>i505    </td><td>i703    </td><td>22      </td></tr>
+    <tr><td>24      </td><td>TC      </td><td>mar1d   </td><td>6       </td><td>MA      </td><td>10.0    </td><td>5.53    </td><td>CGCTCATT</td><td>TAAGATTA</td><td>i506    </td><td>i703    </td><td>23      </td></tr>
+    <tr><td>23      </td><td>TC      </td><td>mar1d   </td><td>5       </td><td>RZ      </td><td> 9.9    </td><td>4.47    </td><td>GAGATTCC</td><td>CTTCGCCT</td><td>i505    </td><td>i704    </td><td>30      </td></tr>
+    <tr><td>24      </td><td>TC      </td><td>mar1d   </td><td>6       </td><td>RZ      </td><td>10.0    </td><td>5.53    </td><td>GAGATTCC</td><td>TAAGATTA</td><td>i506    </td><td>i704    </td><td>31      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [39]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> top_n<span class="p">(</span><span class="m">3</span><span class="p">,</span> desc<span class="p">(</span>concentration_fold_difference<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>Replicate</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th><th scope=col>i7_index</th><th scope=col>i5_index</th><th scope=col>i5_primer</th><th scope=col>i7_primer</th><th scope=col>library#</th></tr></thead>
+<tbody>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>MA      </td><td>10      </td><td>1.34    </td><td>ATTACTCG</td><td>AGGCTATA</td><td>i501    </td><td>i701    </td><td>1       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>RZ      </td><td>10      </td><td>1.34    </td><td>TCCGGAGA</td><td>AGGCTATA</td><td>i501    </td><td>i702    </td><td>9       </td></tr>
+    <tr><td>2       </td><td>YPD     </td><td>H99     </td><td>2       </td><td>TOT     </td><td>10      </td><td>1.34    </td><td>CTGAAGCT</td><td>AGGCTATA</td><td>i501    </td><td>i707    </td><td>17      </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="section" id="4.-Mutate-values">
+<h2>4. Mutate values<a class="headerlink" href="#4.-Mutate-values" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [40]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+select<span class="p">(</span>RNA_sample_num<span class="p">,</span> concentration_fold_difference<span class="p">)</span> <span class="o">%&gt;%</span>
+mutate<span class="p">(</span>concentration_difference<span class="o">=</span><span class="m">2</span><span class="o">^</span>concentration_fold_difference<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RNA_sample_num</th><th scope=col>concentration_fold_difference</th><th scope=col>concentration_difference</th></tr></thead>
+<tbody>
+    <tr><td>2        </td><td>1.34     </td><td> 2.531513</td></tr>
+    <tr><td>9        </td><td>2.23     </td><td> 4.691340</td></tr>
+    <tr><td>10       </td><td>4.37     </td><td>20.677645</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [41]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+transmute<span class="p">(</span>concentration_difference<span class="o">=</span><span class="m">2</span><span class="o">^</span>concentration_fold_difference<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>concentration_difference</th></tr></thead>
+<tbody>
+    <tr><td> 2.531513</td></tr>
+    <tr><td> 4.691340</td></tr>
+    <tr><td>20.677645</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="5.-Summarize">
+<h2>5. Summarize<a class="headerlink" href="#5.-Summarize" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [42]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> summarize<span class="p">(</span>avg_fold_change<span class="o">=</span><span class="kp">mean</span><span class="p">(</span>concentration_fold_difference<span class="p">),</span>
+                 min_fold_change<span class="o">=</span><span class="kp">min</span><span class="p">(</span>concentration_fold_difference<span class="p">),</span>
+                 max_fold_change<span class="o">=</span><span class="kp">max</span><span class="p">(</span>concentration_fold_difference<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>avg_fold_change</th><th scope=col>min_fold_change</th><th scope=col>max_fold_change</th></tr></thead>
+<tbody>
+    <tr><td>2.891961</td><td>1.34    </td><td>5.53    </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [43]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> summarize_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">mean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th></tr></thead>
+<tbody>
+    <tr><td>9.776471</td><td>2.891961</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Group_by">
+<h2>Group_by<a class="headerlink" href="#Group_by" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">summariz</span></code>e is most useful when used with <code class="docutils literal notranslate"><span class="pre">group_by</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [44]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+group_by<span class="p">(</span>Media<span class="p">,</span> Strain<span class="p">,</span> enrichment_method<span class="p">)</span> <span class="o">%&gt;%</span>
+summarize<span class="p">(</span>mean_fold_diff<span class="o">=</span><span class="kp">mean</span><span class="p">(</span>concentration_fold_difference<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>enrichment_method</th><th scope=col>mean_fold_diff</th></tr></thead>
+<tbody>
+    <tr><td>TC      </td><td>H99     </td><td>MA      </td><td>2.576667</td></tr>
+    <tr><td>TC      </td><td>H99     </td><td>RZ      </td><td>2.576667</td></tr>
+    <tr><td>TC      </td><td>mar1d   </td><td>MA      </td><td>3.463333</td></tr>
+    <tr><td>TC      </td><td>mar1d   </td><td>RZ      </td><td>3.463333</td></tr>
+    <tr><td>YPD     </td><td>H99     </td><td>MA      </td><td>2.556667</td></tr>
+    <tr><td>YPD     </td><td>H99     </td><td>RZ      </td><td>2.556667</td></tr>
+    <tr><td>YPD     </td><td>H99     </td><td>TOT     </td><td>1.790000</td></tr>
+    <tr><td>YPD     </td><td>mar1d   </td><td>MA      </td><td>3.246667</td></tr>
+    <tr><td>YPD     </td><td>mar1d   </td><td>RZ      </td><td>3.246667</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [45]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+group_by<span class="p">(</span>Media<span class="p">,</span> Strain<span class="p">,</span> enrichment_method<span class="p">)</span> <span class="o">%&gt;%</span>
+summarize_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">mean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>enrichment_method</th><th scope=col>RIN</th><th scope=col>concentration_fold_difference</th></tr></thead>
+<tbody>
+    <tr><td>TC       </td><td>H99      </td><td>MA       </td><td> 9.850000</td><td>2.576667 </td></tr>
+    <tr><td>TC       </td><td>H99      </td><td>RZ       </td><td> 9.850000</td><td>2.576667 </td></tr>
+    <tr><td>TC       </td><td>mar1d    </td><td>MA       </td><td> 9.333333</td><td>3.463333 </td></tr>
+    <tr><td>TC       </td><td>mar1d    </td><td>RZ       </td><td> 9.333333</td><td>3.463333 </td></tr>
+    <tr><td>YPD      </td><td>H99      </td><td>MA       </td><td>10.000000</td><td>2.556667 </td></tr>
+    <tr><td>YPD      </td><td>H99      </td><td>RZ       </td><td>10.000000</td><td>2.556667 </td></tr>
+    <tr><td>YPD      </td><td>H99      </td><td>TOT      </td><td>10.000000</td><td>1.790000 </td></tr>
+    <tr><td>YPD      </td><td>mar1d    </td><td>MA       </td><td> 9.866667</td><td>3.246667 </td></tr>
+    <tr><td>YPD      </td><td>mar1d    </td><td>RZ       </td><td> 9.866667</td><td>3.246667 </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [46]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+group_by<span class="p">(</span>Media<span class="p">,</span> Strain<span class="p">)</span> <span class="o">%&gt;%</span>
+summarize_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> funs<span class="p">(</span><span class="kp">mean</span><span class="p">,</span> sd<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>RIN_mean</th><th scope=col>concentration_fold_difference_mean</th><th scope=col>RIN_sd</th><th scope=col>concentration_fold_difference_sd</th></tr></thead>
+<tbody>
+    <tr><td>TC       </td><td>H99      </td><td> 9.850000</td><td>2.576667 </td><td>0.2611165</td><td>0.7157873</td></tr>
+    <tr><td>TC       </td><td>mar1d    </td><td> 9.333333</td><td>3.463333 </td><td>1.4643232</td><td>1.3630803</td></tr>
+    <tr><td>YPD      </td><td>H99      </td><td>10.000000</td><td>2.403333 </td><td>0.0000000</td><td>0.8593824</td></tr>
+    <tr><td>YPD      </td><td>mar1d    </td><td> 9.866667</td><td>3.246667 </td><td>0.1669694</td><td>0.7410230</td></tr>
+</tbody>
+</table></div>
+</div>
+<p>What experimental conditions produced the greatest mean fold change?</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [47]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span>
+group_by<span class="p">(</span>Media<span class="p">,</span> Strain<span class="p">,</span> enrichment_method<span class="p">)</span> <span class="o">%&gt;%</span>
+summarize<span class="p">(</span>mean_fold_diff<span class="o">=</span><span class="kp">mean</span><span class="p">(</span>concentration_fold_difference<span class="p">))</span> <span class="o">%&gt;%</span>
+arrange<span class="p">(</span>desc<span class="p">(</span>mean_fold_diff<span class="p">))</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>Media</th><th scope=col>Strain</th><th scope=col>enrichment_method</th><th scope=col>mean_fold_diff</th></tr></thead>
+<tbody>
+    <tr><td>TC      </td><td>mar1d   </td><td>MA      </td><td>3.463333</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

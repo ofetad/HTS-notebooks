@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction to Unix and bash &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction to Unix and bash</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/janice/2_Intro_to_Unix_and_bash.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Introduction-to-Unix-and-bash">
+<h1>Introduction to Unix and bash<a class="headerlink" href="#Introduction-to-Unix-and-bash" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="What-is-an-operating-system?">
+<h2>What is an operating system?<a class="headerlink" href="#What-is-an-operating-system?" title="Permalink to this headline">¶</a></h2>
+<p>Most of you probably know that Unix (Linux), like Windows and MacOS, is
+an operating system (OS). An operating system is essentially the
+interface between applications (such as Word or your browser) and the
+computer itself (devices, memory, etc.)</p>
+<div class="section" id="We-usually-interact-with-the-OS-using-a-Graphical-User-Interface-(GUI).">
+<h3>We usually interact with the OS using a Graphical User Interface (GUI).<a class="headerlink" href="#We-usually-interact-with-the-OS-using-a-Graphical-User-Interface-(GUI)." title="Permalink to this headline">¶</a></h3>
+<p>Those are the ‘windows’ that made microsoft into the giant it is today.
+We open windows into the OS (formally known as DOS). We point and click
+to find files, open programs, etc. This has the advantage that it is
+natural for the user. A disadvantage is that pointing and clicking isn’t
+exactly ‘reproducible’. We don’t have a record of everything we have
+done - and that is something we really want when analyzing data.</p>
+</div>
+<div class="section" id="Another-way---the-command-line">
+<h3>Another way - the command line<a class="headerlink" href="#Another-way---the-command-line" title="Permalink to this headline">¶</a></h3>
+<p>Unix, Windows and MacOS all have command line interfaces. We can access
+them via ‘terminal’ windows. The Jupyter environment offers two
+different ways to use the command line (in our case, we will use the
+bash shell - more on that later). There is a terminal window under the
+tab on the left hand side, but there is also a bash <em>kernel</em>, so that
+you can write commands in a notebook code cell and have them interpreted
+as unix commands. You will learn to use both in this course.</p>
+</div>
+<div class="section" id="The-unix-command-line-interpreter-is-an-interactive-program">
+<h3>The unix command line interpreter is an interactive program<a class="headerlink" href="#The-unix-command-line-interpreter-is-an-interactive-program" title="Permalink to this headline">¶</a></h3>
+<p>The interpreter parses the strings you enter and calls the appropriate
+executable program. There are different versions of this program, of
+which ‘bash’ is one. ‘sh’ was the original version, written in the 1970s
+by Ken Thompson. It was updated over the years and finally completely
+re-written in 1979 by Stephen Bourne. In 1989, another shell was built
+on the Bourne ‘sh’ - and it was named ‘bash’ - for Bourne Again sh.
+There are several other flavors, but we will be using bash.</p>
+<div class="section" id="sh?-Why-the-hush?">
+<h4>sh? Why the hush?<a class="headerlink" href="#sh?-Why-the-hush?" title="Permalink to this headline">¶</a></h4>
+<p>sh is short for ‘shell’. The reason for this terminology is because you
+can think of this programs as hosting an environment (variables can be
+saved and refered to later, among other things). But shells can run any
+program, including other shells. So there is a notion of ‘inheritance’
+from the environment - each subsequently called shell is contained in
+the other.</p>
+</div>
+</div>
+<div class="section" id="The-main-features-of-a-shell">
+<h3>The main features of a shell<a class="headerlink" href="#The-main-features-of-a-shell" title="Permalink to this headline">¶</a></h3>
+<p>The basic features a shell program has are some basic programming
+constructs (loops, conditionals, etc.) and ways to link programs
+together (pipes and redirections). Before we examine those, let’s get a
+little experience working in the command line. We’ll learn how to:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">-</span> <span class="nb">print</span> <span class="n">the</span> <span class="n">current</span> <span class="n">directory</span>
+<span class="o">-</span> <span class="nb">list</span> <span class="n">the</span> <span class="n">contents</span>
+<span class="o">-</span> <span class="n">make</span> <span class="n">a</span> <span class="n">new</span> <span class="n">directory</span>
+<span class="o">-</span> <span class="n">copy</span> <span class="ow">and</span> <span class="n">rename</span> <span class="n">files</span>
+<span class="o">-</span> <span class="n">examine</span> <span class="n">the</span> <span class="n">content</span> <span class="n">of</span> <span class="p">(</span><span class="n">text</span><span class="p">)</span> <span class="n">files</span>
+<span class="o">-</span> <span class="n">Use</span> <span class="n">tab</span> <span class="n">completion</span>
+<span class="o">-</span> <span class="n">Use</span> <span class="n">meta</span> <span class="n">characters</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Exercises---basic-commands">
+<h3>Exercises - basic commands<a class="headerlink" href="#Exercises---basic-commands" title="Permalink to this headline">¶</a></h3>
+<p>From the terminal screen</p>
+<ol class="arabic simple">
+<li>Print the current directory</li>
+<li>Make a directory called ‘mydir’</li>
+<li>Change directory to ‘mydir’</li>
+<li>Copy this notebook to mydir.</li>
+<li>Make another copy of this notebook named ‘copy’</li>
+<li>List the contents of the directory</li>
+<li>List the contents of the directory in long form with permissions and
+modification times</li>
+<li>Sort the list by time.</li>
+<li>Sort the list in reverse order.</li>
+<li>List all files in the parent directory.</li>
+<li>List all files in the parent directory with extension <code class="docutils literal notranslate"><span class="pre">.ipynb</span></code></li>
+<li>List all files in the parent directory that have an ‘_’ as the
+second character in the name.</li>
+</ol>
+<div class="section" id="Command-glossary">
+<h4>Command glossary<a class="headerlink" href="#Command-glossary" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li>ls (list)</li>
+<li>mkdir (make directory)</li>
+<li>cp (copy file)</li>
+<li>mv (rename file)</li>
+<li>pwd (print working directory)</li>
+</ul>
+</div>
+<div class="section" id="meta-characters">
+<h4>meta characters<a class="headerlink" href="#meta-characters" title="Permalink to this headline">¶</a></h4>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">*</span></code> matches all</li>
+<li>? matches a single character</li>
+</ul>
+</div>
+</div>
+<div class="section" id="Programming-constructs-in-bash">
+<h3>Programming constructs in bash<a class="headerlink" href="#Programming-constructs-in-bash" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="loops">
+<h4>loops<a class="headerlink" href="#loops" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first"><strong>for loops</strong></p>
+<p>Use for iterating over a fixed number of items (may be unknown at
+time of coding)</p>
+<p><code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">i</span> <span class="pre">in</span> <span class="pre">$(</span> <span class="pre">ls</span> <span class="pre">);</span> <span class="pre">do</span></code> echo item: $i <code class="docutils literal notranslate"><span class="pre">done</span></code></p>
+</li>
+<li><p class="first"><strong>while loops</strong></p>
+<p>Use for iterating until a certain condition is met</p>
+<p><code class="docutils literal notranslate"><span class="pre">while</span> <span class="pre">true;</span> <span class="pre">do</span></code> echo ‘hello’ <code class="docutils literal notranslate"><span class="pre">done</span></code></p>
+</li>
+<li><p class="first"><strong>until</strong> (really doesn’t do any more than <code class="docutils literal notranslate"><span class="pre">for</span></code> or <code class="docutils literal notranslate"><span class="pre">while</span></code></p>
+</li>
+</ul>
+<p>#### Conditionals (sometimes called ‘flow control’)</p>
+<ul class="simple">
+<li>Simple <strong>if-then</strong></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">=</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">];</span> <span class="pre">then</span></code> echo expression evaluated as true <code class="docutils literal notranslate"><span class="pre">fi</span></code></p>
+<ul class="simple">
+<li><strong>if-then-else</strong></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">if</span> <span class="pre">[</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">=</span> <span class="pre">&quot;foo&quot;</span> <span class="pre">];</span> <span class="pre">then</span></code> echo expression evaluated as true
+<code class="docutils literal notranslate"><span class="pre">else</span></code> echo expression evaluated as false <code class="docutils literal notranslate"><span class="pre">fi</span></code></p>
+</div>
+<div class="section" id="Exercises-for-loops-and-conditionals">
+<h4>Exercises for loops and conditionals<a class="headerlink" href="#Exercises-for-loops-and-conditionals" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>Write a for loop to repeat ‘hello world’ 10 times. Print the number
+of iteration so the output looks like:<ol class="arabic">
+<li>hello world</li>
+<li>hello world</li>
+<li>hello world etc.</li>
+</ol>
+</li>
+<li>Modify the above to add the word ‘again’ as many times as the number
+of current iterations:</li>
+<li>hello world</li>
+<li>hello world again</li>
+<li>hello world again again etc.</li>
+<li>Modify 2 to stop after 3 iterations, after printing ‘enough already’.</li>
+<li>Modify 3 to use a while loop.</li>
+</ol>
+</div>
+</div>
+<div class="section" id="Linking-programs-together---pipes-and-I/O-redirection">
+<h3>Linking programs together - pipes and I/O redirection<a class="headerlink" href="#Linking-programs-together---pipes-and-I/O-redirection" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="I/O-streams">
+<h4>I/O streams<a class="headerlink" href="#I/O-streams" title="Permalink to this headline">¶</a></h4>
+<p>There are three standard I/O streams in Unix:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">stdin</span></code> or standard input. The default is the parent process -
+usually the keyboard</li>
+<li><code class="docutils literal notranslate"><span class="pre">stdout</span></code> or standard output. The default is the parent process -
+usually the terminal screen</li>
+<li><code class="docutils literal notranslate"><span class="pre">stderr</span></code> or standard error. Also defaults to the parent, and
+usually the terminal screen. The important point is that errors and
+output may be treated separately.</li>
+</ul>
+</div>
+<div class="section" id="I/O-redirections-using-|,-&gt;,-&lt;">
+<h4>I/O redirections using <code class="docutils literal notranslate"><span class="pre">|</span></code>, <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;</span></code><a class="headerlink" href="#I/O-redirections-using-|,->,-<" title="Permalink to this headline">¶</a></h4>
+<p>A program’s input and output can be redirected from the standard streams
+in many powerful ways:</p>
+<ul class="simple">
+<li>We can store a program’s output in a file to be saved. We can
+separately save errors (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>).</li>
+<li>We can direct a program to take input from a file rather than the
+keyboard (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>).</li>
+<li>We can direct a program’s output to be another program’s input
+(<code class="docutils literal notranslate"><span class="pre">|</span></code>). This allows linking of several programs to form a workflow.</li>
+</ul>
+</div>
+<div class="section" id="Exercises">
+<h4>Exercises<a class="headerlink" href="#Exercises" title="Permalink to this headline">¶</a></h4>
+<ol class="arabic simple">
+<li>The <code class="docutils literal notranslate"><span class="pre">ps</span> <span class="pre">-aef</span></code> command shows all processes currently running. Use
+<code class="docutils literal notranslate"><span class="pre">|</span></code> and the program <code class="docutils literal notranslate"><span class="pre">grep</span></code> to find the processes you are running
+(your user name is ‘joyvan’)</li>
+<li>Create a list with the filenames in the current directly using <code class="docutils literal notranslate"><span class="pre">ls</span></code>
+and <code class="docutils literal notranslate"><span class="pre">&gt;</span></code>. Use <code class="docutils literal notranslate"><span class="pre">cat</span></code> to see the contents.</li>
+<li>What happens if you repeat the above using <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code>?</li>
+</ol>
+</div>
+</div>
+<div class="section" id="Putting-it-all-together---scripting">
+<h3>Putting it all together - scripting<a class="headerlink" href="#Putting-it-all-together---scripting" title="Permalink to this headline">¶</a></h3>
+<p>The next lesson will teach you to write what are called ‘scripts’. These
+are lists of commands saved in a file that can be executed. This makes a
+workflow reproducible. All of the steps are saved and can be run again
+in <em>exactly</em> the same manner.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

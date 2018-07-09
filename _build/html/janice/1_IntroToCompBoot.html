@@ -1,0 +1,527 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Duke HTS Summer Course 2018 &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Duke HTS Summer Course 2018</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/janice/1_IntroToCompBoot.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Duke-HTS-Summer-Course-2018">
+<h1>Duke HTS Summer Course 2018<a class="headerlink" href="#Duke-HTS-Summer-Course-2018" title="Permalink to this headline">¶</a></h1>
+<p>The first thing you should do with this notebook is make a copy! Go to
+the file menu and choose ‘Make a Copy’.</p>
+<p><em>Great! Now you should be working in a file called
+‘IntroToCompBoot-Copy1’</em></p>
+<p>Briefly go back to the other tab and choose ‘Close and Halt’ from the
+file menu. Why did we do this? Because we have the lecture materials in
+something called a ‘git repository’. We want whatever changes you make
+to be saved under different filenames, so they don’t get overwritten.</p>
+<div class="section" id="Purpose-of-this-component">
+<h2>Purpose of this component<a class="headerlink" href="#Purpose-of-this-component" title="Permalink to this headline">¶</a></h2>
+<p>In this course, you will learn how to generate and analyze RNAseq data.
+Roughly, we have the following components:</p>
+<ul class="simple">
+<li><em>Experimental Design</em> How do we design experiments so that results
+are easily interpretable and answer the question(s) we are interested
+in. (Statistics!!!)</li>
+<li><em>Analysis of Data</em> How do we <strong>properly</strong> analyze experimental data,
+so that results are correct. (More statistics!!!)</li>
+<li><em>Computational Procedure</em> Analysis pipeline (Bioinformatics)</li>
+</ul>
+<p>Finally, we want to do all of the above in a <strong>REPRODUCIBLE</strong> fashion.</p>
+<p>This ‘computational bootcamp’ component is designed to give you the
+tools you need to carry out the steps above - and to do so within the
+context of reproducible research.</p>
+<p>The analysis pipeline has several different apps. Some are written in R,
+and so require knowledge of the R programming language (minimal - but
+some proficiency is needed). Some have components in python, and some
+are binaries. Both of these last types of applications require moderate
+proficiency in the ‘bash shell’ or ‘unix command line’. Therefore, we
+will cover the following topics:</p>
+<ul class="simple">
+<li>Basic R</li>
+<li>Basic Unix/Linux commands</li>
+</ul>
+<p>Additionally, we will use the bootcamp to reinforce the statistical
+lecture materials by walking you through some of the examples using R,
+and we will cover some ‘data visualization’ techniques that include
+graphics in R.</p>
+<p>All of this will be done within the Jupyter notebook tool, which allows
+for what is called ‘literate programming’ and reproducible pipelines.</p>
+</div>
+<div class="section" id="How-this-is-all-setup">
+<h2>How this is all setup<a class="headerlink" href="#How-this-is-all-setup" title="Permalink to this headline">¶</a></h2>
+<div class="figure" id="id1">
+<img alt="image" src="../_images/resource_diag.png" />
+<p class="caption"><span class="caption-text">image</span></p>
+</div>
+</div>
+<div class="section" id="The-Notebook">
+<h2>The Notebook<a class="headerlink" href="#The-Notebook" title="Permalink to this headline">¶</a></h2>
+<p>The Jupyter notebook is an interactive tool that allows the integration
+of text, code and graphics in one unified environment.</p>
+<div class="section" id="Markdown-Cells">
+<h3>Markdown Cells<a class="headerlink" href="#Markdown-Cells" title="Permalink to this headline">¶</a></h3>
+<p>The notebook uses the concept of ‘cells’. There are two types of cells:
+code and markdown. What you are reading now is in a ‘cell’ and that
+‘cell type’ is called ‘markdown’ (essentially just text, but you can use
+some special sequences to get different effects). Markdown is a subset
+of html (if that means anything to you).</p>
+<p>Give it a try! Double click on this cell to get into edit mode. Then,
+see how this word got <em>italicized</em> and how this one is <strong>bold</strong>. Here is
+a bulleted list:</p>
+<ul class="simple">
+<li>item 1</li>
+<li>item 2</li>
+<li>sub item 2a</li>
+<li>sub item 2b</li>
+</ul>
+<p>How about a bit of math?</p>
+<div class="math notranslate">
+\[F(t) = \int_{-\infty}^t f(x) dx\]</div>
+<p>That last one is something called latex, and if you aren’t familiar,
+don’t worry. It’s just to show you that you can do some very pretty
+things in these kinds of cells.</p>
+</div>
+<div class="section" id="Code-Cells">
+<h3>Code Cells<a class="headerlink" href="#Code-Cells" title="Permalink to this headline">¶</a></h3>
+<p>Code cells rely on something called a ‘kernel’. The kernel is simply the
+programming environment that a particular notebook file is running. This
+one is running an R kernel. That means that cells which are not markdown
+cells (the code cells) are interpreted to be R code (as opposed to shell
+commands, python, or one of a rapidly growing list of Jupyter kernels).
+The following cell is a code cell. Note the In[]:</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">print</span><span class="p">(</span><span class="s">&quot;This is a code cell&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[1] &#34;This is a code cell&#34;
+</pre></div></div>
+</div>
+<p>We execute code cells (and markdown cells) by hitting &lt;shift&gt;&lt;Enter&gt;.
+Take a moment to play around a bit and get comfortable. Click on the
+‘help’ menu and look at the keyboard shortcuts (they are very useful).</p>
+</div>
+<div class="section" id="Examples">
+<h3>Examples<a class="headerlink" href="#Examples" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [1]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Do some arithmetic here using the R kernel. Insert another R cell below and try some more.</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [2]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># Make the next cell into a markdown cell (using the keyboard shortcut) and type some text.</span>
+<span class="c1"># Can you make it bold? Italicized?</span>
+<span class="c1"># Can you figure out how to make headings?</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

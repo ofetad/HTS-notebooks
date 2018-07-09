@@ -1,0 +1,1436 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Working with multiple files &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Working with multiple files</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cliburn/R_tidyverse_3.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="Working-with-multiple-files">
+<h1>Working with multiple files<a class="headerlink" href="#Working-with-multiple-files" title="Permalink to this headline">¶</a></h1>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [3]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 2.2.1     ✔ purrr   0.2.5
+✔ tibble  1.4.2     ✔ dplyr   0.7.5
+✔ tidyr   0.8.1     ✔ stringr 1.3.1
+✔ readr   1.1.1     ✔ forcats 0.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+</pre></div></div>
+</div>
+<div class="section" id="Extended-example">
+<h2>Extended example<a class="headerlink" href="#Extended-example" title="Permalink to this headline">¶</a></h2>
+<p>Suppose we have the following scenario:</p>
+<p>A multi-center experiment is conducted at Duke and UNC.</p>
+<ul class="simple">
+<li>Duke has patients <code class="docutils literal notranslate"><span class="pre">Ann</span></code>, <code class="docutils literal notranslate"><span class="pre">Bob</span></code>, <code class="docutils literal notranslate"><span class="pre">Charle</span></code></li>
+<li>UNC has patients <code class="docutils literal notranslate"><span class="pre">David</span></code>, <code class="docutils literal notranslate"><span class="pre">Ed</span></code>, <code class="docutils literal notranslate"><span class="pre">Fiona</span></code></li>
+<li>Each patient has blood sampled at 2 time points</li>
+<li>The genomics core at each center meausres 3 genes for each patient at
+each time point</li>
+<li>The proteomics core at each cneter measure 3 proteins from each
+patient at each time point</li>
+<li>Each cneter has additional information about patient demographics in
+a differnet database</li>
+</ul>
+<p>We have a ten files to work with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">duke_demographics</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">duke_genes_v1</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">duke_genes_v2</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">duke_proteins_v1</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">duke_proteins_v2</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">unc_demographics</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">unc_genes_v1</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">unc_genes_v2</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">unc_proteins_v1</span><span class="o">.</span><span class="n">tsv</span>
+<span class="n">unc_proteins_v2</span><span class="o">.</span><span class="n">tsv</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="Objective">
+<h2>Objective<a class="headerlink" href="#Objective" title="Permalink to this headline">¶</a></h2>
+<p>We want to visualize the correlation between the gene and protein
+expression changes from visit 1 to visit 2 for all patients in the
+study. We also want to augment the data with demographic variables for
+each patient.</p>
+<ul class="simple">
+<li>Assume that labs within an institutioon do not have batch effects
+acroos visits</li>
+<li>Assume that labs at different instituttions have batch affects and
+must be normmalized before comparison</li>
+</ul>
+<div class="section" id="Combine-gene-expression-data-from-Duke-and-normalize-to-zero-mean-and-unit-standard-devaiotn">
+<h3>Combine gene expression data from Duke and normalize to zero mean and unit standard devaiotn<a class="headerlink" href="#Combine-gene-expression-data-from-Duke-and-normalize-to-zero-mean-and-unit-standard-devaiotn" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg1 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/duke_genes_v1.tsv&#39;</span><span class="p">)</span>
+df_dg2 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/duke_genes_v2.tsv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  gene_A = col_double(),
+  gene_B = col_double(),
+  gene_C = col_double()
+)
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  gene_A = col_double(),
+  gene_B = col_double(),
+  gene_C = col_double()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [57]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg1
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>Ann      </td><td> 91.09792</td><td>64.62166 </td><td>124.4608 </td></tr>
+    <tr><td>Bob      </td><td> 88.81115</td><td>78.24940 </td><td>113.6644 </td></tr>
+    <tr><td>Charlie  </td><td>107.52933</td><td>70.52984 </td><td>124.5951 </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [58]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg2
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>Ann      </td><td>108.67919</td><td> 90.38630</td><td>137.5395 </td></tr>
+    <tr><td>Bob      </td><td>113.44700</td><td>101.52725</td><td>144.7763 </td></tr>
+    <tr><td>Charlie  </td><td> 98.12047</td><td> 97.70863</td><td>131.1964 </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [59]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg <span class="o">&lt;-</span> bind_rows<span class="p">(</span>df_dg1<span class="p">,</span> df_dg2<span class="p">,</span> <span class="m">.i</span>d <span class="o">=</span> <span class="s">&quot;visit&quot;</span><span class="p">)</span>
+df_dg
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>1        </td><td>Ann      </td><td> 91.09792</td><td> 64.62166</td><td>124.4608 </td></tr>
+    <tr><td>1        </td><td>Bob      </td><td> 88.81115</td><td> 78.24940</td><td>113.6644 </td></tr>
+    <tr><td>1        </td><td>Charlie  </td><td>107.52933</td><td> 70.52984</td><td>124.5951 </td></tr>
+    <tr><td>2        </td><td>Ann      </td><td>108.67919</td><td> 90.38630</td><td>137.5395 </td></tr>
+    <tr><td>2        </td><td>Bob      </td><td>113.44700</td><td>101.52725</td><td>144.7763 </td></tr>
+    <tr><td>2        </td><td>Charlie  </td><td> 98.12047</td><td> 97.70863</td><td>131.1964 </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [64]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg.scaled <span class="o">&lt;-</span> df_dg  <span class="o">%&gt;%</span> mutate_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">scale</span><span class="p">)</span>
+df_dg.scaled
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>1         </td><td>Ann       </td><td>-1.0073042</td><td>-1.2805845</td><td>-0.4479685</td></tr>
+    <tr><td>1         </td><td>Bob       </td><td>-1.2335142</td><td>-0.3723877</td><td>-1.4327190</td></tr>
+    <tr><td>1         </td><td>Charlie   </td><td> 0.6181059</td><td>-0.8868438</td><td>-0.4357137</td></tr>
+    <tr><td>2         </td><td>Ann       </td><td> 0.7318518</td><td> 0.4364545</td><td> 0.7449587</td></tr>
+    <tr><td>2         </td><td>Bob       </td><td> 1.2034879</td><td> 1.1789234</td><td> 1.4050414</td></tr>
+    <tr><td>2         </td><td>Charlie   </td><td>-0.3126272</td><td> 0.9244382</td><td> 0.1664011</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Do-the-same-for-the-other-data-sets">
+<h3>Do the same for the other data sets<a class="headerlink" href="#Do-the-same-for-the-other-data-sets" title="Permalink to this headline">¶</a></h3>
+<p>Duke protein expression</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [67]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dp1 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/duke_proteins_v1.tsv&#39;</span><span class="p">)</span>
+df_dp2 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/duke_proteins_v2.tsv&#39;</span><span class="p">)</span>
+df_dp <span class="o">&lt;-</span> bind_rows<span class="p">(</span>df_dp1<span class="p">,</span> df_dp2<span class="p">,</span> <span class="m">.i</span>d <span class="o">=</span> <span class="s">&quot;visit&quot;</span><span class="p">)</span>
+df_dp.scaled <span class="o">&lt;-</span> df_dp <span class="o">%&gt;%</span>  mutate_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">scale</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  prot_A = col_double(),
+  prot_B = col_double(),
+  prot_C = col_double()
+)
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  prot_A = col_double(),
+  prot_B = col_double(),
+  prot_C = col_double()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [68]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_dp.scaled<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>prot_A</th><th scope=col>prot_B</th><th scope=col>prot_C</th></tr></thead>
+<tbody>
+    <tr><td>1          </td><td>Ann        </td><td>-0.4967020 </td><td> 0.9830005 </td><td>-1.37774584</td></tr>
+    <tr><td>1          </td><td>Bob        </td><td>-1.0132844 </td><td>-1.1799912 </td><td>-1.01496776</td></tr>
+    <tr><td>1          </td><td>Charlie    </td><td>-0.3455620 </td><td>-0.8561590 </td><td> 0.60497113</td></tr>
+    <tr><td>2          </td><td>Ann        </td><td>-0.4191436 </td><td> 0.3772850 </td><td> 0.88392265</td></tr>
+    <tr><td>2          </td><td>Bob        </td><td> 1.7870904 </td><td>-0.5388750 </td><td>-0.05597907</td></tr>
+    <tr><td>2          </td><td>Charlie    </td><td> 0.4876017 </td><td> 1.2147397 </td><td> 0.95979888</td></tr>
+</tbody>
+</table></div>
+</div>
+<p>UNC gene expression</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [69]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_ug1 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/unc_genes_v1.tsv&#39;</span><span class="p">)</span>
+df_ug2 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/unc_genes_v2.tsv&#39;</span><span class="p">)</span>
+df_ug <span class="o">&lt;-</span> bind_rows<span class="p">(</span>df_ug1<span class="p">,</span> df_ug2<span class="p">,</span> <span class="m">.i</span>d <span class="o">=</span> <span class="s">&quot;visit&quot;</span><span class="p">)</span>
+df_ug.scaled <span class="o">&lt;-</span> df_ug <span class="o">%&gt;%</span>  mutate_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">scale</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  gene_A = col_double(),
+  gene_B = col_double(),
+  gene_C = col_double()
+)
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  gene_A = col_double(),
+  gene_B = col_double(),
+  gene_C = col_double()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [70]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_ug.scaled<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>1          </td><td>David      </td><td>-0.59425311</td><td>-1.2262407 </td><td>-0.30771429</td></tr>
+    <tr><td>1          </td><td>Ed         </td><td>-1.17645232</td><td>-0.5087640 </td><td> 0.02835355</td></tr>
+    <tr><td>1          </td><td>Fiona      </td><td> 0.36658576</td><td>-0.3217073 </td><td>-1.82700451</td></tr>
+    <tr><td>2          </td><td>David      </td><td> 0.08382534</td><td> 0.5735718 </td><td> 0.66994801</td></tr>
+    <tr><td>2          </td><td>Ed         </td><td>-0.40047124</td><td>-0.1817827 </td><td> 0.92567540</td></tr>
+    <tr><td>2          </td><td>Fiona      </td><td> 1.72076557</td><td> 1.6649228 </td><td> 0.51074184</td></tr>
+</tbody>
+</table></div>
+</div>
+<p>UNC protein expression</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [73]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_up1 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/unc_proteins_v1.tsv&#39;</span><span class="p">)</span>
+df_up2 <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/unc_proteins_v2.tsv&#39;</span><span class="p">)</span>
+df_up <span class="o">&lt;-</span> bind_rows<span class="p">(</span>df_up1<span class="p">,</span> df_up2<span class="p">,</span> <span class="m">.i</span>d <span class="o">=</span> <span class="s">&quot;visit&quot;</span><span class="p">)</span>
+df_up.scaled <span class="o">&lt;-</span> df_up <span class="o">%&gt;%</span>  mutate_if<span class="p">(</span><span class="kp">is.numeric</span><span class="p">,</span> <span class="kp">scale</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  prot_A = col_double(),
+  prot_B = col_double(),
+  prot_C = col_double()
+)
+Parsed with column specification:
+cols(
+  pet = col_character(),
+  prot_A = col_double(),
+  prot_B = col_double(),
+  prot_C = col_double()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [74]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_up.scaled<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>prot_A</th><th scope=col>prot_B</th><th scope=col>prot_C</th></tr></thead>
+<tbody>
+    <tr><td>1          </td><td>David      </td><td> 1.04580136</td><td> 0.1280673 </td><td>-0.6867668 </td></tr>
+    <tr><td>1          </td><td>Ed         </td><td>-1.65977553</td><td> 0.2117860 </td><td> 0.9772767 </td></tr>
+    <tr><td>1          </td><td>Fiona      </td><td> 0.05811210</td><td>-0.6413509 </td><td>-1.4593511 </td></tr>
+    <tr><td>2          </td><td>David      </td><td>-0.44575884</td><td>-0.7384114 </td><td> 0.9175770 </td></tr>
+    <tr><td>2          </td><td>Ed         </td><td> 0.02765904</td><td> 1.8317201 </td><td> 0.6595148 </td></tr>
+    <tr><td>2          </td><td>Fiona      </td><td> 0.97396187</td><td>-0.7918110 </td><td>-0.4082508 </td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Fidn-the-change-in-each-gene-from-visit-1-to-visit-2">
+<h3>Fidn the change in each gene from visit 1 to visit 2<a class="headerlink" href="#Fidn-the-change-in-each-gene-from-visit-1-to-visit-2" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [77]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg.scaled
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>gene_A</th><th scope=col>gene_B</th><th scope=col>gene_C</th></tr></thead>
+<tbody>
+    <tr><td>1         </td><td>Ann       </td><td>-1.0073042</td><td>-1.2805845</td><td>-0.4479685</td></tr>
+    <tr><td>1         </td><td>Bob       </td><td>-1.2335142</td><td>-0.3723877</td><td>-1.4327190</td></tr>
+    <tr><td>1         </td><td>Charlie   </td><td> 0.6181059</td><td>-0.8868438</td><td>-0.4357137</td></tr>
+    <tr><td>2         </td><td>Ann       </td><td> 0.7318518</td><td> 0.4364545</td><td> 0.7449587</td></tr>
+    <tr><td>2         </td><td>Bob       </td><td> 1.2034879</td><td> 1.1789234</td><td> 1.4050414</td></tr>
+    <tr><td>2         </td><td>Charlie   </td><td>-0.3126272</td><td> 0.9244382</td><td> 0.1664011</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [87]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="c1"># To avoid a bunch or harmless warnigns, we will temprarily suppress them</span>
+
+<span class="kp">options</span><span class="p">(</span>warn<span class="o">=</span><span class="m">-1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [88]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>gene<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;gene&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+<span class="kp">head</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>visit</th><th scope=col>pet</th><th scope=col>gene</th><th scope=col>value</th></tr></thead>
+<tbody>
+    <tr><td>1         </td><td>Ann       </td><td>gene_A    </td><td>-1.0073042</td></tr>
+    <tr><td>1         </td><td>Bob       </td><td>gene_A    </td><td>-1.2335142</td></tr>
+    <tr><td>1         </td><td>Charlie   </td><td>gene_A    </td><td> 0.6181059</td></tr>
+    <tr><td>2         </td><td>Ann       </td><td>gene_A    </td><td> 0.7318518</td></tr>
+    <tr><td>2         </td><td>Bob       </td><td>gene_A    </td><td> 1.2034879</td></tr>
+    <tr><td>2         </td><td>Charlie   </td><td>gene_A    </td><td>-0.3126272</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [89]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>gene<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;gene&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+spread<span class="p">(</span>visit<span class="p">,</span> value<span class="p">)</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>pet</th><th scope=col>gene</th><th scope=col>1</th><th scope=col>2</th></tr></thead>
+<tbody>
+    <tr><td>Ann       </td><td>gene_A    </td><td>-1.0073042</td><td>0.7318518 </td></tr>
+    <tr><td>Ann       </td><td>gene_B    </td><td>-1.2805845</td><td>0.4364545 </td></tr>
+    <tr><td>Ann       </td><td>gene_C    </td><td>-0.4479685</td><td>0.7449587 </td></tr>
+    <tr><td>Bob       </td><td>gene_A    </td><td>-1.2335142</td><td>1.2034879 </td></tr>
+    <tr><td>Bob       </td><td>gene_B    </td><td>-0.3723877</td><td>1.1789234 </td></tr>
+    <tr><td>Bob       </td><td>gene_C    </td><td>-1.4327190</td><td>1.4050414 </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [98]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dg.diff <span class="o">&lt;-</span> df_dg.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>gene<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;gene&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+spread<span class="p">(</span>visit<span class="p">,</span> value<span class="p">)</span> <span class="o">%&gt;%</span>
+transmute<span class="p">(</span>patient<span class="o">=</span>pet<span class="p">,</span>
+          gene<span class="o">=</span>str_extract<span class="p">(</span>gene<span class="p">,</span> <span class="s">&#39;[^_]+$&#39;</span><span class="p">),</span>
+          gene.change<span class="o">=</span><span class="sb">`2`</span><span class="o">-</span><span class="sb">`1`</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>df_dg.diff<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th></tr></thead>
+<tbody>
+    <tr><td>Ann     </td><td>A       </td><td>1.739156</td></tr>
+    <tr><td>Ann     </td><td>B       </td><td>1.717039</td></tr>
+    <tr><td>Ann     </td><td>C       </td><td>1.192927</td></tr>
+    <tr><td>Bob     </td><td>A       </td><td>2.437002</td></tr>
+    <tr><td>Bob     </td><td>B       </td><td>1.551311</td></tr>
+    <tr><td>Bob     </td><td>C       </td><td>2.837760</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Combine-with-UNC-data">
+<h3>Combine with UNC data<a class="headerlink" href="#Combine-with-UNC-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [99]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_ug.diff <span class="o">&lt;-</span> df_ug.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>gene<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;gene&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+spread<span class="p">(</span>visit<span class="p">,</span> value<span class="p">)</span> <span class="o">%&gt;%</span>
+transmute<span class="p">(</span>patient<span class="o">=</span>pet<span class="p">,</span>
+          gene<span class="o">=</span>str_extract<span class="p">(</span>gene<span class="p">,</span> <span class="s">&#39;[^_]+$&#39;</span><span class="p">),</span>
+          gene.change<span class="o">=</span><span class="sb">`2`</span><span class="o">-</span><span class="sb">`1`</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>df_ug.diff<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th></tr></thead>
+<tbody>
+    <tr><td>David    </td><td>A        </td><td>0.6780785</td></tr>
+    <tr><td>David    </td><td>B        </td><td>1.7998124</td></tr>
+    <tr><td>David    </td><td>C        </td><td>0.9776623</td></tr>
+    <tr><td>Ed       </td><td>A        </td><td>0.7759811</td></tr>
+    <tr><td>Ed       </td><td>B        </td><td>0.3269814</td></tr>
+    <tr><td>Ed       </td><td>C        </td><td>0.8973218</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [103]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_g <span class="o">&lt;-</span> bind_rows<span class="p">(</span><span class="kt">list</span><span class="p">(</span>duke<span class="o">=</span>df_dg.diff<span class="p">,</span> unc<span class="o">=</span>df_ug.diff<span class="p">),</span> <span class="m">.i</span>d<span class="o">=</span><span class="s">&#39;site&#39;</span><span class="p">)</span>
+df_g
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th></tr></thead>
+<tbody>
+    <tr><td>duke      </td><td>Ann       </td><td>A         </td><td> 1.7391560</td></tr>
+    <tr><td>duke      </td><td>Ann       </td><td>B         </td><td> 1.7170389</td></tr>
+    <tr><td>duke      </td><td>Ann       </td><td>C         </td><td> 1.1929272</td></tr>
+    <tr><td>duke      </td><td>Bob       </td><td>A         </td><td> 2.4370022</td></tr>
+    <tr><td>duke      </td><td>Bob       </td><td>B         </td><td> 1.5513112</td></tr>
+    <tr><td>duke      </td><td>Bob       </td><td>C         </td><td> 2.8377604</td></tr>
+    <tr><td>duke      </td><td>Charlie   </td><td>A         </td><td>-0.9307330</td></tr>
+    <tr><td>duke      </td><td>Charlie   </td><td>B         </td><td> 1.8112820</td></tr>
+    <tr><td>duke      </td><td>Charlie   </td><td>C         </td><td> 0.6021148</td></tr>
+    <tr><td>unc       </td><td>David     </td><td>A         </td><td> 0.6780785</td></tr>
+    <tr><td>unc       </td><td>David     </td><td>B         </td><td> 1.7998124</td></tr>
+    <tr><td>unc       </td><td>David     </td><td>C         </td><td> 0.9776623</td></tr>
+    <tr><td>unc       </td><td>Ed        </td><td>A         </td><td> 0.7759811</td></tr>
+    <tr><td>unc       </td><td>Ed        </td><td>B         </td><td> 0.3269814</td></tr>
+    <tr><td>unc       </td><td>Ed        </td><td>C         </td><td> 0.8973218</td></tr>
+    <tr><td>unc       </td><td>Fiona     </td><td>A         </td><td> 1.3541798</td></tr>
+    <tr><td>unc       </td><td>Fiona     </td><td>B         </td><td> 1.9866301</td></tr>
+    <tr><td>unc       </td><td>Fiona     </td><td>C         </td><td> 2.3377464</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Now-do-the-same-with-protein-data">
+<h3>Now do the same with protein data<a class="headerlink" href="#Now-do-the-same-with-protein-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [104]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dp.diff <span class="o">&lt;-</span> df_dp.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>protein<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;prot&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+spread<span class="p">(</span>visit<span class="p">,</span> value<span class="p">)</span> <span class="o">%&gt;%</span>
+transmute<span class="p">(</span>patient<span class="o">=</span>pet<span class="p">,</span>
+          protein<span class="o">=</span>str_extract<span class="p">(</span>protein<span class="p">,</span> <span class="s">&#39;[^_]+$&#39;</span><span class="p">),</span>
+          protein.change<span class="o">=</span><span class="sb">`2`</span><span class="o">-</span><span class="sb">`1`</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>df_dp.diff<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patient</th><th scope=col>protein</th><th scope=col>protein.change</th></tr></thead>
+<tbody>
+    <tr><td>Ann        </td><td>A          </td><td> 0.07755833</td></tr>
+    <tr><td>Ann        </td><td>B          </td><td>-0.60571547</td></tr>
+    <tr><td>Ann        </td><td>C          </td><td> 2.26166848</td></tr>
+    <tr><td>Bob        </td><td>A          </td><td> 2.80037479</td></tr>
+    <tr><td>Bob        </td><td>B          </td><td> 0.64111624</td></tr>
+    <tr><td>Bob        </td><td>C          </td><td> 0.95898869</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [105]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_up.diff <span class="o">&lt;-</span> df_up.scaled <span class="o">%&gt;%</span>
+gather<span class="p">(</span>protein<span class="p">,</span> value<span class="p">,</span> starts_with<span class="p">(</span><span class="s">&#39;prot&#39;</span><span class="p">))</span>  <span class="o">%&gt;%</span>
+spread<span class="p">(</span>visit<span class="p">,</span> value<span class="p">)</span> <span class="o">%&gt;%</span>
+transmute<span class="p">(</span>patient<span class="o">=</span>pet<span class="p">,</span>
+          protein<span class="o">=</span>str_extract<span class="p">(</span>protein<span class="p">,</span> <span class="s">&#39;[^_]+$&#39;</span><span class="p">),</span>
+          protein.change<span class="o">=</span><span class="sb">`2`</span><span class="o">-</span><span class="sb">`1`</span><span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>df_up.diff<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patient</th><th scope=col>protein</th><th scope=col>protein.change</th></tr></thead>
+<tbody>
+    <tr><td>David     </td><td>A         </td><td>-1.4915602</td></tr>
+    <tr><td>David     </td><td>B         </td><td>-0.8664787</td></tr>
+    <tr><td>David     </td><td>C         </td><td> 1.6043438</td></tr>
+    <tr><td>Ed        </td><td>A         </td><td> 1.6874346</td></tr>
+    <tr><td>Ed        </td><td>B         </td><td> 1.6199340</td></tr>
+    <tr><td>Ed        </td><td>C         </td><td>-0.3177619</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [106]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_p <span class="o">&lt;-</span> bind_rows<span class="p">(</span><span class="kt">list</span><span class="p">(</span>duke<span class="o">=</span>df_dp.diff<span class="p">,</span> unc<span class="o">=</span>df_up.diff<span class="p">),</span> <span class="m">.i</span>d<span class="o">=</span><span class="s">&#39;site&#39;</span><span class="p">)</span>
+df_p
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>protein</th><th scope=col>protein.change</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td> 0.07755833</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td>-0.60571547</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td> 2.26166848</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td> 2.80037479</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td> 0.64111624</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td> 0.95898869</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>A          </td><td> 0.83316369</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>B          </td><td> 2.07089865</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>C          </td><td> 0.35482775</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>A          </td><td>-1.49156020</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>B          </td><td>-0.86647868</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>C          </td><td> 1.60434377</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>A          </td><td> 1.68743457</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>B          </td><td> 1.61993404</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>C          </td><td>-0.31776193</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>A          </td><td> 0.91584977</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>B          </td><td>-0.15046013</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>C          </td><td> 1.05110029</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Combine-gene-and-protein-data-into-single-data-frame">
+<h3>Combine gene and protein data into single data frame<a class="headerlink" href="#Combine-gene-and-protein-data-into-single-data-frame" title="Permalink to this headline">¶</a></h3>
+<p>Sinec the rows are perfectly aligned, we can just bind columsn togehter.
+If we are not certain that the rows match up exactly, it is safer to use
+a <code class="docutils literal notranslate"><span class="pre">join</span></code> to combine columns.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [108]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>bind_cols<span class="p">(</span>df_g<span class="p">,</span> df_p<span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th><th scope=col>site1</th><th scope=col>patient1</th><th scope=col>protein</th><th scope=col>protein.change</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td> 1.7391560 </td><td>duke       </td><td>Ann        </td><td>A          </td><td> 0.07755833</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td> 1.7170389 </td><td>duke       </td><td>Ann        </td><td>B          </td><td>-0.60571547</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td> 1.1929272 </td><td>duke       </td><td>Ann        </td><td>C          </td><td> 2.26166848</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td> 2.4370022 </td><td>duke       </td><td>Bob        </td><td>A          </td><td> 2.80037479</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td> 1.5513112 </td><td>duke       </td><td>Bob        </td><td>B          </td><td> 0.64111624</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td> 2.8377604 </td><td>duke       </td><td>Bob        </td><td>C          </td><td> 0.95898869</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>A          </td><td>-0.9307330 </td><td>duke       </td><td>Charlie    </td><td>A          </td><td> 0.83316369</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>B          </td><td> 1.8112820 </td><td>duke       </td><td>Charlie    </td><td>B          </td><td> 2.07089865</td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>C          </td><td> 0.6021148 </td><td>duke       </td><td>Charlie    </td><td>C          </td><td> 0.35482775</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>A          </td><td> 0.6780785 </td><td>unc        </td><td>David      </td><td>A          </td><td>-1.49156020</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>B          </td><td> 1.7998124 </td><td>unc        </td><td>David      </td><td>B          </td><td>-0.86647868</td></tr>
+    <tr><td>unc        </td><td>David      </td><td>C          </td><td> 0.9776623 </td><td>unc        </td><td>David      </td><td>C          </td><td> 1.60434377</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>A          </td><td> 0.7759811 </td><td>unc        </td><td>Ed         </td><td>A          </td><td> 1.68743457</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>B          </td><td> 0.3269814 </td><td>unc        </td><td>Ed         </td><td>B          </td><td> 1.61993404</td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>C          </td><td> 0.8973218 </td><td>unc        </td><td>Ed         </td><td>C          </td><td>-0.31776193</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>A          </td><td> 1.3541798 </td><td>unc        </td><td>Fiona      </td><td>A          </td><td> 0.91584977</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>B          </td><td> 1.9866301 </td><td>unc        </td><td>Fiona      </td><td>B          </td><td>-0.15046013</td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>C          </td><td> 2.3377464 </td><td>unc        </td><td>Fiona      </td><td>C          </td><td> 1.05110029</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [118]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_gp <span class="o">&lt;-</span> bind_cols<span class="p">(</span>df_g<span class="p">,</span> df_p <span class="o">%&gt;%</span> select<span class="p">(</span><span class="o">-</span>site<span class="p">,</span> <span class="o">-</span>patient<span class="p">,</span> <span class="o">-</span>protein<span class="p">))</span>
+<span class="kp">head</span><span class="p">(</span>df_gp<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th><th scope=col>protein.change</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td>1.739156   </td><td> 0.07755833</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td>1.717039   </td><td>-0.60571547</td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td>1.192927   </td><td> 2.26166848</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td>2.437002   </td><td> 2.80037479</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td>1.551311   </td><td> 0.64111624</td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td>2.837760   </td><td> 0.95898869</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="section" id="Combine-with-demographic-data">
+<h3>Combine with demographic data<a class="headerlink" href="#Combine-with-demographic-data" title="Permalink to this headline">¶</a></h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [136]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_dd <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/duke_demographics.tsv&#39;</span><span class="p">)</span>
+df_ud <span class="o">&lt;-</span> read_tsv<span class="p">(</span><span class="s">&#39;data/unc_demographics.tsv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  patients = col_character(),
+  age = col_integer(),
+  sex = col_character()
+)
+Parsed with column specification:
+cols(
+  patients = col_character(),
+  age = col_integer(),
+  sex = col_character()
+)
+</pre></div></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [137]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_dd<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patients</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>Ann    </td><td>16     </td><td>F      </td></tr>
+    <tr><td>Bob    </td><td>23     </td><td>M      </td></tr>
+    <tr><td>Beth   </td><td>43     </td><td>F      </td></tr>
+    <tr><td>Charlie</td><td>53     </td><td>M      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [138]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_ud<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>patients</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>David </td><td>49    </td><td>K     </td></tr>
+    <tr><td>Edward</td><td>53    </td><td>M     </td></tr>
+    <tr><td>Fiona </td><td>67    </td><td>F     </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [139]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_d <span class="o">&lt;-</span> bind_rows<span class="p">(</span><span class="kt">list</span><span class="p">(</span>duke<span class="o">=</span>df_dd<span class="p">,</span> unc<span class="o">=</span>df_ud<span class="p">),</span> <span class="m">.i</span>d<span class="o">=</span><span class="s">&#39;site&#39;</span><span class="p">)</span>
+df_d
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patients</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>duke   </td><td>Ann    </td><td>16     </td><td>F      </td></tr>
+    <tr><td>duke   </td><td>Bob    </td><td>23     </td><td>M      </td></tr>
+    <tr><td>duke   </td><td>Beth   </td><td>43     </td><td>F      </td></tr>
+    <tr><td>duke   </td><td>Charlie</td><td>53     </td><td>M      </td></tr>
+    <tr><td>unc    </td><td>David  </td><td>49     </td><td>K      </td></tr>
+    <tr><td>unc    </td><td>Edward </td><td>53     </td><td>M      </td></tr>
+    <tr><td>unc    </td><td>Fiona  </td><td>67     </td><td>F      </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [140]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>left_join<span class="p">(</span>df_gp<span class="p">,</span> df_d<span class="p">,</span> by <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;site&#39;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;patient&#39;</span><span class="o">=</span><span class="s">&#39;patients&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th><th scope=col>protein.change</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td> 1.7391560 </td><td> 0.07755833</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td> 1.7170389 </td><td>-0.60571547</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td> 1.1929272 </td><td> 2.26166848</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td> 2.4370022 </td><td> 2.80037479</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td> 1.5513112 </td><td> 0.64111624</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td> 2.8377604 </td><td> 0.95898869</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>A          </td><td>-0.9307330 </td><td> 0.83316369</td><td>53         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>B          </td><td> 1.8112820 </td><td> 2.07089865</td><td>53         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>C          </td><td> 0.6021148 </td><td> 0.35482775</td><td>53         </td><td>M          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>A          </td><td> 0.6780785 </td><td>-1.49156020</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>B          </td><td> 1.7998124 </td><td>-0.86647868</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>C          </td><td> 0.9776623 </td><td> 1.60434377</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>A          </td><td> 0.7759811 </td><td> 1.68743457</td><td>NA         </td><td>NA         </td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>B          </td><td> 0.3269814 </td><td> 1.61993404</td><td>NA         </td><td>NA         </td></tr>
+    <tr><td>unc        </td><td>Ed         </td><td>C          </td><td> 0.8973218 </td><td>-0.31776193</td><td>NA         </td><td>NA         </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>A          </td><td> 1.3541798 </td><td> 0.91584977</td><td>67         </td><td>F          </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>B          </td><td> 1.9866301 </td><td>-0.15046013</td><td>67         </td><td>F          </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>C          </td><td> 2.3377464 </td><td> 1.05110029</td><td>67         </td><td>F          </td></tr>
+</tbody>
+</table></div>
+</div>
+<p>There are missing values for Ed because the neames don’t match. We know
+that Ed’s name in this case is really Edward, so we fix and try again.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [147]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>left_join<span class="p">(</span>df_gp <span class="o">%&gt;%</span> mutate<span class="p">(</span>patient<span class="o">=</span>recode<span class="p">(</span>patient<span class="p">,</span> <span class="s">&#39;Ed&#39;</span><span class="o">=</span><span class="s">&#39;Edward&#39;</span><span class="p">)),</span>
+          df_d<span class="p">,</span>
+          by <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;site&#39;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;patient&#39;</span><span class="o">=</span><span class="s">&#39;patients&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th><th scope=col>protein.change</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td> 1.7391560 </td><td> 0.07755833</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td> 1.7170389 </td><td>-0.60571547</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td> 1.1929272 </td><td> 2.26166848</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td> 2.4370022 </td><td> 2.80037479</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td> 1.5513112 </td><td> 0.64111624</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td> 2.8377604 </td><td> 0.95898869</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>A          </td><td>-0.9307330 </td><td> 0.83316369</td><td>53         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>B          </td><td> 1.8112820 </td><td> 2.07089865</td><td>53         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Charlie    </td><td>C          </td><td> 0.6021148 </td><td> 0.35482775</td><td>53         </td><td>M          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>A          </td><td> 0.6780785 </td><td>-1.49156020</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>B          </td><td> 1.7998124 </td><td>-0.86647868</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>David      </td><td>C          </td><td> 0.9776623 </td><td> 1.60434377</td><td>49         </td><td>K          </td></tr>
+    <tr><td>unc        </td><td>Edward     </td><td>A          </td><td> 0.7759811 </td><td> 1.68743457</td><td>53         </td><td>M          </td></tr>
+    <tr><td>unc        </td><td>Edward     </td><td>B          </td><td> 0.3269814 </td><td> 1.61993404</td><td>53         </td><td>M          </td></tr>
+    <tr><td>unc        </td><td>Edward     </td><td>C          </td><td> 0.8973218 </td><td>-0.31776193</td><td>53         </td><td>M          </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>A          </td><td> 1.3541798 </td><td> 0.91584977</td><td>67         </td><td>F          </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>B          </td><td> 1.9866301 </td><td>-0.15046013</td><td>67         </td><td>F          </td></tr>
+    <tr><td>unc        </td><td>Fiona      </td><td>C          </td><td> 2.3377464 </td><td> 1.05110029</td><td>67         </td><td>F          </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [148]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_all <span class="o">&lt;-</span> left_join<span class="p">(</span>df_gp <span class="o">%&gt;%</span> mutate<span class="p">(</span>patient<span class="o">=</span>recode<span class="p">(</span>patient<span class="p">,</span> <span class="s">&#39;Ed&#39;</span><span class="o">=</span><span class="s">&#39;Edward&#39;</span><span class="p">)),</span>
+          df_d<span class="p">,</span>
+          by <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;site&#39;</span><span class="p">,</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;patient&#39;</span><span class="o">=</span><span class="s">&#39;patients&#39;</span><span class="p">)))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [150]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_all<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>site</th><th scope=col>patient</th><th scope=col>gene</th><th scope=col>gene.change</th><th scope=col>protein.change</th><th scope=col>age</th><th scope=col>sex</th></tr></thead>
+<tbody>
+    <tr><td>duke       </td><td>Ann        </td><td>A          </td><td>1.739156   </td><td> 0.07755833</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>B          </td><td>1.717039   </td><td>-0.60571547</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Ann        </td><td>C          </td><td>1.192927   </td><td> 2.26166848</td><td>16         </td><td>F          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>A          </td><td>2.437002   </td><td> 2.80037479</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>B          </td><td>1.551311   </td><td> 0.64111624</td><td>23         </td><td>M          </td></tr>
+    <tr><td>duke       </td><td>Bob        </td><td>C          </td><td>2.837760   </td><td> 0.95898869</td><td>23         </td><td>M          </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [161]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">options</span><span class="p">(</span>repr.plot.width<span class="o">=</span><span class="m">8</span><span class="p">,</span> repr.plot.height<span class="o">=</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Plotting the data suggests that there may be an increase in most genes
+and proteins from visit 1 to visit 2 (since most of the changes are
+positive), but there is no obvious correlation between the gene and its
+protein product.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [171]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>ggplot<span class="p">(</span>df_all<span class="p">,</span> aes<span class="p">(</span>x<span class="o">=</span>gene.change<span class="p">,</span> y<span class="o">=</span>protein.change<span class="p">,</span> color<span class="o">=</span>site<span class="p">))</span> <span class="o">+</span>
+geom_point<span class="p">()</span> <span class="o">+</span>
+geom_hline<span class="p">(</span>yintercept <span class="o">=</span> <span class="m">0</span><span class="p">,</span> color<span class="o">=</span><span class="s">&#39;grey&#39;</span><span class="p">)</span> <span class="o">+</span>
+geom_vline<span class="p">(</span>xintercept <span class="o">=</span> <span class="m">0</span><span class="p">,</span> color<span class="o">=</span><span class="s">&#39;grey&#39;</span><span class="p">)</span> <span class="o">+</span>
+xlim<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span> <span class="o">+</span>
+ylim<span class="p">(</span><span class="kt">c</span><span class="p">(</span><span class="m">-3</span><span class="p">,</span> <span class="m">3</span><span class="p">))</span> <span class="o">+</span>
+facet_grid<span class="p">(</span><span class="o">~</span> gene<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="admonition warning">
+Data type cannot be displayed:</div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<img alt="../_images/cliburn_R_tidyverse_3_50_1.png" src="../_images/cliburn_R_tidyverse_3_50_1.png" />
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

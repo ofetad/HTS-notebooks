@@ -1,0 +1,204 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Analyze 2018 Pilot runs in Parallel\n",
+    "\n",
+    "## Shell Variables\n",
+    "Assign the variables in this notebook."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "ls /data/hts2018_pilot/"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "set -u\n",
+    "export CUROUT=$HOME/work/scratch/2018_check_sample35\n",
+    "export DATA_BASE=\"/data/hts2018_pilot/\"\n",
+    "export RAW_FASTQS=\"$DATA_BASE/Granek_4837_180427A5\"\n",
+    "# CURDATA_1=$CURDATA\n",
+    "# export INFO=$HOME/work/myinfo\n",
+    "export TRIMMED=$CUROUT/trimmed_fastqs\n",
+    "export GENOME_DIR=$CUROUT/genome\n",
+    "export STAR_OUT=$CUROUT/star_out_stress\n",
+    "export ADAPTERS=$DATA_BASE/neb_E7600_adapters_withrc.fasta\n",
+    "\n",
+    "# ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/fungi/Cryptococcus_neoformans/all_assembly_versions/GCF_000149245.1_CNA3\n",
+    "export ACCESSION=\"GCF_000149245.1_CNA3\"\n",
+    "export PREFIX=${ACCESSION}_genomic\n",
+    "export GFF=${PREFIX}.gff\n",
+    "export GTF=${PREFIX}.gtf\n",
+    "export FNA=${PREFIX}.fna\n",
+    "\n",
+    "export FA_URL=\"ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/fasta/fungi_basidiomycota1_collection/cryptococcus_neoformans_var_grubii_h99/dna/Cryptococcus_neoformans_var_grubii_h99.CNA3.dna.toplevel.fa.gz\"\n",
+    "export GTF_URL=\"ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/gtf/fungi_basidiomycota1_collection/cryptococcus_neoformans_var_grubii_h99/Cryptococcus_neoformans_var_grubii_h99.CNA3.39.gtf.gz\"\n",
+    "export GFF_URL=\"ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/gff3/fungi_basidiomycota1_collection/cryptococcus_neoformans_var_grubii_h99/Cryptococcus_neoformans_var_grubii_h99.CNA3.39.gff3.gz\"\n",
+    "export GFF=$(basename ${GFF_URL%.gz})\n",
+    "export GTF=$(basename ${GTF_URL%.gz})\n",
+    "export FA=$(basename ${FA_URL%.gz})\n",
+    "export THREADS=8\n",
+    "export MAX_JOBS=5\n",
+    "\n",
+    "echo $GFF $GTF $FA\n",
+    "\n",
+    "# Making New Directories\n",
+    "mkdir -p $TRIMMED $GENOME_DIR $STAR_OUT\n",
+    "\n",
+    "# ls $CURDATA"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# # ftp://ftp.ncbi.nlm.nih.gov/genomes/refseq/fungi/Cryptococcus_neoformans/all_assembly_versions/GCF_000149245.1_CNA3\n",
+    "# ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/fasta/fungi_basidiomycota1_collection/cryptococcus_neoformans_var_grubii_h99/dna/Cryptococcus_neoformans_var_grubii_h99.CNA3.dna.toplevel.fa.gz\n",
+    "# ftp://ftp.ensemblgenomes.org/pub/release-39/fungi/gff3/fungi_basidiomycota1_collection/cryptococcus_neoformans_var_grubii_h99/Cryptococcus_neoformans_var_grubii_h99.CNA3.39.gff3.gz\n",
+    "\n",
+    "for CUR in $FA_URL $GTF_URL ; do\n",
+    "    wget --directory-prefix ${GENOME_DIR} ${CUR}\n",
+    "done"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "gunzip --force ${GENOME_DIR}/${GTF}.gz\n",
+    "gunzip --force ${GENOME_DIR}/${FA}.gz"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "STAR \\\n",
+    "    --runThreadN $THREADS \\\n",
+    "    --runMode genomeGenerate \\\n",
+    "    --genomeDir $GENOME_DIR \\\n",
+    "    --genomeFastaFiles ${GENOME_DIR}/${FA} \\\n",
+    "    --sjdbGTFfile ${GENOME_DIR}/${GTF} \\\n",
+    "    --sjdbGTFfeatureExon exon \\\n",
+    "    --sjdbGTFtagExonParentTranscript transcript_id \\\n",
+    "    --sjdbGTFtagExonParentGene gene_id \\\n",
+    "    --genomeSAindexNbases 6"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "### Running the full pipeline on all the samples"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "trim_func() {\n",
+    "    # echo $FASTQ\n",
+    "    FASTQ=$1\n",
+    "    FASTQ=${FASTQ##*/} # strip directory from file path\n",
+    "    # echo $FASTQ\n",
+    "    SAMPLE=\"${FASTQ%_L001_R1_001.fastq.gz}\" # strip .fq.gz file extension\n",
+    "    echo $SAMPLE\n",
+    "    # exit 1\n",
+    "\n",
+    "    # gunzip all 4 lanes for each sample into \n",
+    "    # run fastq-mcf on both miseq runs (e.g. concatenate on the fly) using a named pipe\n",
+    "    # see https://github.com/ExpressionAnalysis/ea-utils/blob/wiki/FastqMcf.md\n",
+    "\n",
+    "    # make a pipe\n",
+    "    CUR_PIPE=`mktemp --dry-run`_${SAMPLE}_pipe.fq\n",
+    "    mkfifo $CUR_PIPE\n",
+    "    # gunzip each sample's reads from all 4 lanes into the pipe\n",
+    "    # This generates a concatenated stream of all 4 lanes\n",
+    "    # $RAW_FASTQS/1_MA_*_L001_R1_001.fastq.gz\n",
+    "    ls $RAW_FASTQS/${SAMPLE}_L00[1-4]_R1_001.fastq.gz\n",
+    "    gunzip -c $RAW_FASTQS/${SAMPLE}_L00[1-4]_R1_001.fastq.gz > $CUR_PIPE &\n",
+    "\n",
+    "    # Use the pipe as input to fastq-mcf\n",
+    "    fastq-mcf \\\n",
+    "        $ADAPTERS \\\n",
+    "        $CUR_PIPE \\\n",
+    "        -o $TRIMMED/${SAMPLE}.trim.fastq.gz \\\n",
+    "        -q 20 -x 0.5\n",
+    "\n",
+    "    rm -f $CUR_PIPE\n",
+    "    \n",
+    "    STAR \\\n",
+    "    --runMode alignReads \\\n",
+    "    --runThreadN $THREADS \\\n",
+    "    --readFilesCommand zcat \\\n",
+    "    --genomeDir $GENOME_DIR \\\n",
+    "    --outSAMtype BAM SortedByCoordinate \\\n",
+    "    --quantMode GeneCounts \\\n",
+    "    --genomeLoad LoadAndKeep \\\n",
+    "    --twopassMode None \\\n",
+    "    --limitBAMsortRAM 1000000000 \\\n",
+    "    --outFileNamePrefix ${STAR_OUT}/${SAMPLE} \\\n",
+    "    --readFilesIn $TRIMMED/${SAMPLE}.trim.fastq.gz\n",
+    "}\n",
+    "export -f trim_func\n",
+    "\n",
+    "STAR --genomeDir $GENOME_DIR \\\n",
+    "    --genomeLoad LoadAndExit \n",
+    "    \n",
+    "# parallel --jobs 1 pipeline_func ::: $RAW_FASTQS/1_MA_*_L001_R1_001.fastq.gz\n",
+    "parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/35_*_L001_R1_001.fastq.gz\n",
+    "# parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/*_L001_R1_001.fastq.gz\n",
+    "# parallel --jobs $MAX_JOBS trim_func ::: $RAW_FASTQS/[1-4]_RZ_[CJP]_L001_R1_001.fastq.gz\n",
+    "\n",
+    "STAR --genomeDir $GENOME_DIR \\\n",
+    "    --genomeLoad Remove "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# ls $CUROUT/*\n",
+    "head $CUROUT/star_out_stress/35_MA_P_S39Log.final.out \n",
+    "# rm -r $CUROUT"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Bash",
+   "language": "bash",
+   "name": "bash"
+  },
+  "language_info": {
+   "codemirror_mode": "shell",
+   "file_extension": ".sh",
+   "mimetype": "text/x-sh",
+   "name": "bash"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 1
+}

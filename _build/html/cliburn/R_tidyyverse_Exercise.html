@@ -1,0 +1,898 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>R tidyverse exercise &mdash; HTS2018 1.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> HTS2018
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Slides:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../slides.html">Slide sets</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">HTS2018</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>R <code class="docutils literal notranslate"><span class="pre">tidyverse</span></code> exercise</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cliburn/R_tidyyverse_Exercise.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput,
+div.nbinput div.prompt,
+div.nbinput div.input_area,
+div.nbinput div[class*=highlight],
+div.nbinput div[class*=highlight] pre,
+div.nboutput,
+div.nbinput div.prompt,
+div.nbinput div.output_area,
+div.nboutput div[class*=highlight],
+div.nboutput div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput,
+div.nboutput {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput,
+    div.nboutput {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput div.prompt pre {
+    color: #303F9F;
+}
+
+/* output prompt */
+div.nboutput div.prompt pre {
+    color: #D84315;
+}
+
+/* all prompts */
+div.nbinput div.prompt,
+div.nboutput div.prompt {
+    min-width: 8ex;
+    padding-top: 0.4em;
+    padding-right: 0.4em;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput div.prompt,
+    div.nboutput div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput div.prompt pre,
+div.nboutput div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput div.input_area,
+div.nboutput div.output_area {
+    padding: 0.4em;
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput div.input_area,
+    div.nboutput div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput div.input_area {
+    border: 1px solid #cfcfcf;
+    border-radius: 2px;
+    background: #f7f7f7;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.pngmath center alignment in output cells */
+div.nboutput div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast,
+.nboutput.nblast {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast + .nbinput {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+</style>
+<div class="section" id="R-tidyverse-exercise">
+<h1>R <code class="docutils literal notranslate"><span class="pre">tidyverse</span></code> exercise<a class="headerlink" href="#R-tidyverse-exercise" title="Permalink to this headline">¶</a></h1>
+<p>We will be working with the output files from the STAR aligner for this
+exercise. Thse files have four columns</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">column</span> <span class="mi">1</span><span class="p">:</span> <span class="n">gene</span> <span class="n">ID</span>
+<span class="n">column</span> <span class="mi">2</span><span class="p">:</span> <span class="n">counts</span> <span class="k">for</span> <span class="n">unstranded</span> <span class="n">RNA</span><span class="o">-</span><span class="n">seq</span>
+<span class="n">column</span> <span class="mi">3</span><span class="p">:</span> <span class="n">counts</span> <span class="k">for</span> <span class="n">the</span> <span class="mi">1</span><span class="n">st</span> <span class="n">read</span> <span class="n">strand</span> <span class="n">aligned</span> <span class="k">with</span> <span class="n">RNA</span> <span class="p">(</span><span class="n">htseq</span><span class="o">-</span><span class="n">count</span> <span class="n">option</span> <span class="o">-</span><span class="n">s</span> <span class="n">yes</span><span class="p">)</span>
+<span class="n">column</span> <span class="mi">4</span><span class="p">:</span> <span class="n">counts</span> <span class="k">for</span> <span class="n">the</span> <span class="mi">2</span><span class="n">nd</span> <span class="n">read</span> <span class="n">strand</span> <span class="n">aligned</span> <span class="k">with</span> <span class="n">RNA</span> <span class="p">(</span><span class="n">htseq</span><span class="o">-</span><span class="n">count</span> <span class="n">option</span> <span class="o">-</span><span class="n">s</span> <span class="n">reverse</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>For explanation, see <a class="reference external" href="https://www.biostars.org/p/218995/">STAR quantMode geneCounts
+values</a></p>
+<p>Based on the protocol we are using column 4 is the sense strand reads
+and column 3 is the anti-sense read counts, so we will be working with
+columns 1 and 4.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [14]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kn">library</span><span class="p">(</span>tidyverse<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+── Attaching packages ─────────────────────────────────────── tidyverse 1.2.1 ──
+✔ ggplot2 2.2.1     ✔ purrr   0.2.5
+✔ tibble  1.4.2     ✔ dplyr   0.7.5
+✔ tidyr   0.8.1     ✔ stringr 1.3.1
+✔ readr   1.1.1     ✔ forcats 0.3.0
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+</pre></div></div>
+</div>
+<p>We will work with the following data from the 4 lanes.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span><span class="n">_MA_J_S18_L001_R1_001ReadsPerGene</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">tab</span>
+<span class="mi">1</span><span class="n">_MA_J_S18_L002_R1_001ReadsPerGene</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">tab</span>
+<span class="mi">1</span><span class="n">_MA_J_S18_L003_R1_001ReadsPerGene</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">tab</span>
+<span class="mi">1</span><span class="n">_MA_J_S18_L004_R1_001ReadsPerGene</span><span class="o">.</span><span class="n">out</span><span class="o">.</span><span class="n">tab</span>
+</pre></div>
+</div>
+<p>found in the directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">hts</span><span class="o">/</span><span class="mi">2018</span><span class="o">/</span><span class="n">foot</span>
+</pre></div>
+</div>
+<div class="section" id="Setting-up-variables">
+<h2>Setting up variables<a class="headerlink" href="#Setting-up-variables" title="Permalink to this headline">¶</a></h2>
+<p><strong>1</strong>. Use <code class="docutils literal notranslate"><span class="pre">file.path</span></code> to create a path to the data directory and save
+it as the variable <code class="docutils literal notranslate"><span class="pre">data_dir</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [9]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>data_dir <span class="o">=</span>  <span class="kp">file.path</span><span class="p">(</span><span class="s">&#39;/&#39;</span><span class="p">,</span> <span class="s">&#39;data&#39;</span><span class="p">,</span> <span class="s">&#39;hts&#39;</span><span class="p">,</span> <span class="s">&#39;2018&#39;</span><span class="p">,</span> <span class="s">&#39;foot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p><strong>2</strong>. Save the filenames in a variable <code class="docutils literal notranslate"><span class="pre">filenames</span></code></p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [10]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>filenames <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;1_MA_J_S18_L001_R1_001ReadsPerGene.out.tab&#39;</span><span class="p">,</span>
+               <span class="s">&#39;1_MA_J_S18_L002_R1_001ReadsPerGene.out.tab&#39;</span><span class="p">,</span>
+               <span class="s">&#39;1_MA_J_S18_L003_R1_001ReadsPerGene.out.tab&#39;</span><span class="p">,</span>
+               <span class="s">&#39;1_MA_J_S18_L004_R1_001ReadsPerGene.out.tab&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Explore-one-data-file">
+<h2>Explore one data file<a class="headerlink" href="#Explore-one-data-file" title="Permalink to this headline">¶</a></h2>
+<p><strong>3</strong>. Read the data from the first file into a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> or
+<code class="docutils literal notranslate"><span class="pre">tibble</span></code> called <code class="docutils literal notranslate"><span class="pre">df</span></code>. Note that the file does not have a header row.
+Name the columns <code class="docutils literal notranslate"><span class="pre">id</span></code>,<code class="docutils literal notranslate"><span class="pre">us</span></code>, <code class="docutils literal notranslate"><span class="pre">fs</span></code> and <code class="docutils literal notranslate"><span class="pre">rs</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [20]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>f1 <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span>data_dir<span class="p">,</span> filenames<span class="p">[[</span><span class="m">1</span><span class="p">]])</span>
+f1
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+'//data/hts/2018/foot/1_MA_J_S18_L001_R1_001ReadsPerGene.out.tab'</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [22]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">&lt;-</span> read_tsv<span class="p">(</span>f1<span class="p">,</span> col_names <span class="o">=</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;us&#39;</span><span class="p">,</span> <span class="s">&#39;fs&#39;</span><span class="p">,</span> <span class="s">&#39;rs&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="stderr output_area docutils container">
+<div class="highlight"><pre>
+Parsed with column specification:
+cols(
+  id = col_character(),
+  us = col_integer(),
+  fs = col_integer(),
+  rs = col_integer()
+)
+</pre></div></div>
+</div>
+<p><strong>4</strong>. View the first and last 10 lines of <code class="docutils literal notranslate"><span class="pre">df</span></code></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [23]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>us</th><th scope=col>fs</th><th scope=col>rs</th></tr></thead>
+<tbody>
+    <tr><td>N_unmapped    </td><td> 12683        </td><td>  12683       </td><td>12683         </td></tr>
+    <tr><td>N_multimapping</td><td> 48837        </td><td>  48837       </td><td>48837         </td></tr>
+    <tr><td>N_noFeature   </td><td>  9605        </td><td>2207680       </td><td>18570         </td></tr>
+    <tr><td>N_ambiguous   </td><td>169971        </td><td>   1593       </td><td>  409         </td></tr>
+    <tr><td>gene0         </td><td>     0        </td><td>      0       </td><td>    0         </td></tr>
+    <tr><td>gene1         </td><td>     0        </td><td>      0       </td><td>    0         </td></tr>
+    <tr><td>gene2         </td><td>     8        </td><td>      0       </td><td>    8         </td></tr>
+    <tr><td>gene3         </td><td>     1        </td><td>      0       </td><td>    1         </td></tr>
+    <tr><td>gene4         </td><td>     0        </td><td>      0       </td><td>    0         </td></tr>
+    <tr><td>gene5         </td><td>    66        </td><td>      0       </td><td>   66         </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [33]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df <span class="o">%&gt;%</span> <span class="kp">tail</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>us</th><th scope=col>fs</th><th scope=col>rs</th></tr></thead>
+<tbody>
+    <tr><td>gene8319</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8323</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8324</td><td>1       </td><td>0       </td><td>1       </td></tr>
+    <tr><td>gene8326</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8327</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8328</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8329</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8330</td><td>0       </td><td>0       </td><td>0       </td></tr>
+    <tr><td>gene8333</td><td>2       </td><td>0       </td><td>2       </td></tr>
+    <tr><td>gene8334</td><td>0       </td><td>0       </td><td>0       </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>5</strong>. Save the lines from 5 onwards into a new <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> called
+<code class="docutils literal notranslate"><span class="pre">df_genes</span></code>.</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [26]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_genes <span class="o">&lt;-</span> df <span class="o">%&gt;%</span> slice<span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [29]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_genes <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>us</th><th scope=col>fs</th><th scope=col>rs</th></tr></thead>
+<tbody>
+    <tr><td>gene0</td><td>0    </td><td>0    </td><td>0    </td></tr>
+    <tr><td>gene1</td><td>0    </td><td>0    </td><td>0    </td></tr>
+    <tr><td>gene2</td><td>8    </td><td>0    </td><td>8    </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>6</strong>. Create a new file from <code class="docutils literal notranslate"><span class="pre">df_genes</span></code> contining only the 1st and
+4th columns and save as a new variable <code class="docutils literal notranslate"><span class="pre">df_final</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [53]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_final <span class="o">&lt;-</span> df_genes <span class="o">%&gt;%</span> select<span class="p">(</span>id<span class="p">,</span> rs<span class="p">)</span>
+df_final <span class="o">%&gt;%</span> <span class="kp">head</span><span class="p">(</span><span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>rs</th></tr></thead>
+<tbody>
+    <tr><td>gene0</td><td>0    </td></tr>
+    <tr><td>gene1</td><td>0    </td></tr>
+    <tr><td>gene2</td><td>8    </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>7</strong>. Now do steps 3, 5 and 6 for the other 3 files using a loop, and
+combine them with <code class="docutils literal notranslate"><span class="pre">df_final</span></code> using <code class="docutils literal notranslate"><span class="pre">full_join</span></code> on the <code class="docutils literal notranslate"><span class="pre">id</span></code> column
+to end up with a data.frame with 5 columns (id and 4 count columns).</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [54]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kr">for</span> <span class="p">(</span>i <span class="kr">in</span> <span class="m">2</span><span class="o">:</span><span class="m">4</span><span class="p">)</span> <span class="p">{</span>
+    filename <span class="o">&lt;-</span> filenames<span class="p">[</span>i<span class="p">]</span>
+    path <span class="o">&lt;-</span> <span class="kp">file.path</span><span class="p">(</span><span class="kp">file.path</span><span class="p">(</span>data_dir<span class="p">,</span> filename<span class="p">))</span>
+    df <span class="o">&lt;-</span> <span class="kp">suppressMessages</span><span class="p">(</span>read_tsv<span class="p">(</span>path<span class="p">,</span> col_names <span class="o">=</span><span class="kt">c</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;us&#39;</span><span class="p">,</span> <span class="s">&#39;fs&#39;</span><span class="p">,</span> <span class="s">&#39;rs&#39;</span><span class="p">)))</span>
+    df <span class="o">&lt;-</span> df <span class="o">%&gt;%</span> slice<span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">))</span> <span class="o">%&gt;%</span> select<span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;rs&#39;</span><span class="p">)</span>
+    df_final <span class="o">&lt;-</span> full_join<span class="p">(</span>df_final<span class="p">,</span> df<span class="p">,</span> by <span class="o">=</span> <span class="s">&#39;id&#39;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<p><strong>8</strong>. Rename the counts columns as <code class="docutils literal notranslate"><span class="pre">lane1</span></code>, <code class="docutils literal notranslate"><span class="pre">lane2</span></code>, <code class="docutils literal notranslate"><span class="pre">lane3</span></code> and
+<code class="docutils literal notranslate"><span class="pre">lane4</span></code>. At this point you should have a <code class="docutils literal notranslate"><span class="pre">data.frame</span></code> that looks
+like this</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">id</th>
+<th class="head">lane1</th>
+<th class="head">lane2</th>
+<th class="head">lane3</th>
+<th class="head">lane4</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>gene0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>gene1</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr class="row-even"><td>gene2</td>
+<td>8</td>
+<td>4</td>
+<td>10</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [56]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">names</span><span class="p">(</span>df_final<span class="p">)</span> <span class="o">&lt;-</span> <span class="kt">c</span><span class="p">(</span><span class="s">&#39;id&#39;</span><span class="p">,</span> <span class="s">&#39;lane1&#39;</span><span class="p">,</span> <span class="s">&#39;lane2&#39;</span><span class="p">,</span> <span class="s">&#39;lane3&#39;</span><span class="p">,</span> <span class="s">&#39;lane4&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [78]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span><span class="kp">head</span><span class="p">(</span>df_final<span class="p">,</span> <span class="m">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>lane1</th><th scope=col>lane2</th><th scope=col>lane3</th><th scope=col>lane4</th></tr></thead>
+<tbody>
+    <tr><td>gene0</td><td>0    </td><td>0    </td><td> 0   </td><td>1    </td></tr>
+    <tr><td>gene1</td><td>0    </td><td>0    </td><td> 0   </td><td>0    </td></tr>
+    <tr><td>gene2</td><td>8    </td><td>4    </td><td>10   </td><td>3    </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>9</strong>. Create a new column containng the sum of lanes 1-4 called
+<code class="docutils literal notranslate"><span class="pre">counts</span></code> and save as <code class="docutils literal notranslate"><span class="pre">df_wiht_counts</span></code>.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [110]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_with_counts <span class="o">&lt;-</span> df_final <span class="o">%&gt;%</span>
+mutate<span class="p">(</span>counts <span class="o">=</span> lane1 <span class="o">+</span> lane2<span class="o">+</span> lane3 <span class="o">+</span> lane4<span class="p">)</span>
+<span class="kp">head</span><span class="p">(</span>df_with_counts<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>lane1</th><th scope=col>lane2</th><th scope=col>lane3</th><th scope=col>lane4</th><th scope=col>counts</th></tr></thead>
+<tbody>
+    <tr><td>gene0</td><td> 0   </td><td> 0   </td><td> 0   </td><td> 1   </td><td>  1  </td></tr>
+    <tr><td>gene1</td><td> 0   </td><td> 0   </td><td> 0   </td><td> 0   </td><td>  0  </td></tr>
+    <tr><td>gene2</td><td> 8   </td><td> 4   </td><td>10   </td><td> 3   </td><td> 25  </td></tr>
+    <tr><td>gene3</td><td> 1   </td><td> 0   </td><td> 1   </td><td> 1   </td><td>  3  </td></tr>
+    <tr><td>gene4</td><td> 0   </td><td> 1   </td><td> 0   </td><td> 0   </td><td>  1  </td></tr>
+    <tr><td>gene5</td><td>66   </td><td>58   </td><td>72   </td><td>65   </td><td>261  </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>Note on more facny R</strong>.</p>
+<p>If there are too many columns to add, you can use <code class="docutils literal notranslate"><span class="pre">Reduce</span></code>. The funny
+<code class="docutils literal notranslate"><span class="pre">.</span></code> notation is a dummy variable for the entity begin pipled in.</p>
+<p><code class="docutils literal notranslate"><span class="pre">Reduce</span></code> applies the binary operation in the first argument to all
+pairs of variables in the second arguemnt, with an optional initial
+value (defaults to a the identity for the binary operation).</p>
+<p>For example:</p>
+<p><code class="docutils literal notranslate"><span class="pre">Reduce('+',</span> <span class="pre">1:4)</span></code> is the same as <code class="docutils literal notranslate"><span class="pre">Reduce('+',</span> <span class="pre">1:4,</span> <span class="pre">0)</span></code> which is
+<code class="docutils literal notranslate"><span class="pre">((((0</span> <span class="pre">+</span> <span class="pre">1)</span> <span class="pre">+</span> <span class="pre">2)</span> <span class="pre">+</span> <span class="pre">3)</span> <span class="pre">+</span> <span class="pre">4)</span></code> and returns 10 - i.e. this gives the same
+result as sum.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [95]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_final <span class="o">%&gt;%</span>
+mutate<span class="p">(</span>counts <span class="o">=</span> <span class="kp">Reduce</span><span class="p">(</span><span class="s">&#39;+&#39;</span><span class="p">,</span> <span class="m">.</span><span class="p">[</span><span class="m">2</span><span class="o">:</span><span class="m">5</span><span class="p">]))</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>lane1</th><th scope=col>lane2</th><th scope=col>lane3</th><th scope=col>lane4</th><th scope=col>counts</th></tr></thead>
+<tbody>
+    <tr><td>gene0</td><td>0    </td><td>0    </td><td> 0   </td><td>1    </td><td> 1   </td></tr>
+    <tr><td>gene1</td><td>0    </td><td>0    </td><td> 0   </td><td>0    </td><td> 0   </td></tr>
+    <tr><td>gene2</td><td>8    </td><td>4    </td><td>10   </td><td>3    </td><td>25   </td></tr>
+    <tr><td>gene3</td><td>1    </td><td>0    </td><td> 1   </td><td>1    </td><td> 3   </td></tr>
+    <tr><td>gene4</td><td>0    </td><td>1    </td><td> 0   </td><td>0    </td><td> 1   </td></tr>
+</tbody>
+</table></div>
+</div>
+<p><strong>10</strong>. Keep only the <code class="docutils literal notranslate"><span class="pre">id</span></code> and <code class="docutils literal notranslate"><span class="pre">coutns</span></code> columns and remove reow
+where the gene count is 0 and save as <code class="docutils literal notranslate"><span class="pre">df_counts</span></code>.</p>
+<ul class="simple">
+<li>How many genes with non-zero counts are there?</li>
+<li>What is the gene(s) with the highest count?</li>
+<li>What are the top 10 largest counts - i.e. the set with the largest
+number of genes having the same count?</li>
+</ul>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [113]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_counts <span class="o">&lt;-</span> df_with_counts <span class="o">%&gt;%</span>
+select<span class="p">(</span>id<span class="p">,</span> counts<span class="p">)</span> <span class="o">%&gt;%</span>
+filter<span class="p">(</span>counts <span class="o">!=</span> <span class="m">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [117]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_counts <span class="o">%&gt;%</span> summarize<span class="p">(</span>n<span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>n()</th></tr></thead>
+<tbody>
+    <tr><td>7852</td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [121]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_counts <span class="o">%&gt;%</span> filter<span class="p">(</span>counts <span class="o">==</span> <span class="kp">max</span><span class="p">(</span>counts<span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>id</th><th scope=col>counts</th></tr></thead>
+<tbody>
+    <tr><td>gene7418</td><td>210788  </td></tr>
+</tbody>
+</table></div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre>
+<span></span>In [131]:
+</pre></div>
+</div>
+<div class="input_area highlight-r notranslate"><div class="highlight"><pre>
+<span></span>df_counts <span class="o">%&gt;%</span>
+group_by<span class="p">(</span>counts<span class="p">)</span> <span class="o">%&gt;%</span>
+summarize<span class="p">(</span>num_genes <span class="o">=</span> n<span class="p">())</span>  <span class="o">%&gt;%</span>
+arrange<span class="p">(</span>desc<span class="p">(</span>num_genes<span class="p">))</span> <span class="o">%&gt;%</span>
+<span class="kp">head</span><span class="p">(</span><span class="m">10</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<table>
+<thead><tr><th scope=col>counts</th><th scope=col>num_genes</th></tr></thead>
+<tbody>
+    <tr><td> 1 </td><td>199</td></tr>
+    <tr><td> 2 </td><td>132</td></tr>
+    <tr><td> 3 </td><td>115</td></tr>
+    <tr><td> 5 </td><td> 87</td></tr>
+    <tr><td> 4 </td><td> 82</td></tr>
+    <tr><td> 6 </td><td> 80</td></tr>
+    <tr><td> 7 </td><td> 78</td></tr>
+    <tr><td> 9 </td><td> 62</td></tr>
+    <tr><td>11 </td><td> 55</td></tr>
+    <tr><td> 8 </td><td> 54</td></tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Cliburn Chan.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          
+          SphinxRtdTheme.Navigation.enableSticky();
+          
+      });
+  </script> 
+
+</body>
+</html>

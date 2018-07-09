@@ -1,0 +1,48 @@
+{
+ "cells": [
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "library(tidyverse)\n",
+    "library(stringr)\n",
+    "\n",
+    "info.dir=\"../info\"\n",
+    "list.files(info.dir)\n",
+    "old.metadata=file.path(info.dir, \"2018_pilot_metadata.tsv\")\n",
+    "anon.metadata=file.path(info.dir, \"2018_pilot_metadata_anon.tsv\")"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "read_tsv(old.metadata) %>%\n",
+    "    mutate(experiment_person = str_replace_all(experiment_person, c(\"S\" = \"expA\", \"C\" = \"expB\"))) %>%\n",
+    "    mutate(libprep_person = str_replace_all(libprep_person, c(\"C\" = \"prepA\", \"J\" = \"prepB\", \"P\" =\"prepC\"))) %>% \n",
+    "    write_tsv(anon.metadata)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "R",
+   "language": "R",
+   "name": "ir"
+  },
+  "language_info": {
+   "codemirror_mode": "r",
+   "file_extension": ".r",
+   "mimetype": "text/x-r-source",
+   "name": "R",
+   "pygments_lexer": "r",
+   "version": "3.4.1"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}
