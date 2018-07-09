@@ -20,6 +20,14 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
 
   janice/1_IntroToCompBoot.ipynb
   janice/2_Intro_to_Unix_and_bash.ipynb
+  cliburn/Bash_tutorial_prep.ipynb
+  cliburn/The_Unix_Shell_01___File_and_Directory_Management.ipynb
+  cliburn/The_Unix_Shell_02___Working_with_Text.ipynb
+  cliburn/The_Unix_Shell_03___Finding_Stuff.ipynb
+  cliburn/The_Unix_Shell_04___Regular_Expresssions.ipynb
+  cliburn/The_Unix_Shell_05___Shell_Scripts.ipynb
+  cliburn/The_Unix_Shell___Exercises.ipynb
+  cliburn/The_Unix_Shell___Exercises_Solutions.ipynb
   cliburn/Bash_in_Jupyter.ipynb
   cliburn/Bash_Exercise_1.ipynb
   cliburn/Bash_Exercise_1_Solutions.ipynb

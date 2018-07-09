@@ -1,3 +1,9 @@
 .ipynb_checkpoints/
+_build/
 figs/
 refs/
+
+cliburn/hello.txt
+cliburn/stderr.txt
+cliburn/stdout.txt
+cliburn/vietnam.txt
