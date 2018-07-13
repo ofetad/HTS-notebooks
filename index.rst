@@ -37,11 +37,25 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
 
 .. toctree::
   :maxdepth: 2
+  :caption: Bioinformatics
+
+  bioinformatics/prep_nb/anon_metadata.ipynb
+  bioinformatics/prep_nb/check_kouros_rpackages.ipynb
+  bioinformatics/prep_nb/investigate_rrna_proportion.ipynb
+  bioinformatics/prep_nb/star_2018_pilot.ipynb  bioinformatics/fastq_intro.ipynb
+  bioinformatics/fastq_trimming.ipynb
+  bioinformatics/fastqc.ipynb
+  bioinformatics/genome_prep.ipynb
+  bioinformatics/mapping.ipynb
+  bioinformatics/quality_scores.ipynb
+
+.. toctree::
+  :maxdepth: 2
   :caption: R Graphics and Data Manipulation
 
   cliburn/R_Graphics_Overview.ipynb
   cliburn/R_Graphics_Base.ipynb
-  cliburn/R_Graphic_ ggplot2.ipynb
+  cliburn/R_Graphics_ggplot2.ipynb
   cliburn/R_Graphics_Exercise.ipynb
   cliburn/R_Graphics_Exercise_Solutions.ipynb
   cliburn/R_tidyverse_1.ipynb
