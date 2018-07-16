@@ -53,6 +53,7 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   :maxdepth: 2
   :caption: R Graphics and Data Manipulation
 
+  janice/3_IntroductionToR.ipynb 
   cliburn/R_Graphics_Overview.ipynb
   cliburn/R_Graphics_Base.ipynb
   cliburn/R_Graphics_ggplot2.ipynb
