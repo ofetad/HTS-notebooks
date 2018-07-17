@@ -2,7 +2,8 @@
 _build/
 figs/
 refs/
-
+~*
+*~
 cliburn/hello.txt
 cliburn/stderr.txt
 cliburn/stdout.txt
