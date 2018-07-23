@@ -13,3 +13,4 @@ export STAR_OUT=$CUROUT/star_out
 export FASTA=${GENOME_DIR}/Cryptococcus_neoformans_var_grubii_h99.CNA3.dna.toplevel.fa
 export GTF=${GENOME_DIR}/Cryptococcus_neoformans_var_grubii_h99.CNA3.39.gtf
 export COUNT_OUT=$CUROUT/count_out
+export QC=$CUROUT/qc_output
