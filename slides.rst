@@ -33,4 +33,8 @@ Biostatistics
 - :download:`Statistical Inference I handout <slides/stat-inference-handout.pdf>`
 - :download:`Statistical Inference II <slides/stat-estimation.pdf>`
 - :download:`Statistical Inference II handout <slides/stat-estimation-handout.pdf>`
+- :download:`Unsuperviseed Learning <slides/stat-unsupervised.pdf>`
+- :download:`Unsuperviseed Learning handout <slides/stat-unsupervised-handout.pdf>`
+- :download:`Supervised Learning <slides/stat-supervised.pdf>`
+- :download:`Supervised Learning handout <slides/stat-supervised-handout.pdf>`
 

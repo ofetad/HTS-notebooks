@@ -26,12 +26,9 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   cliburn/The_Unix_Shell_03___Finding_Stuff.ipynb
   cliburn/The_Unix_Shell_04___Regular_Expresssions.ipynb
   cliburn/The_Unix_Shell_05___Shell_Scripts.ipynb
-  cliburn/The_Unix_Shell___Exercises.ipynb
   cliburn/The_Unix_Shell___Exercises_Solutions.ipynb
   cliburn/Bash_in_Jupyter.ipynb
-  cliburn/Bash_Exercise_1.ipynb
   cliburn/Bash_Exercise_1_Solutions.ipynb
-  cliburn/Bash_Exercise_2.ipynb
   cliburn/Bash_Exercise_2_Solutoins.ipynb
   # cliburn/Process-RNA-seq-counts.ipynb
 
@@ -57,14 +54,20 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   cliburn/R_Graphics_Overview.ipynb
   cliburn/R_Graphics_Base.ipynb
   cliburn/R_Graphics_ggplot2.ipynb
-  cliburn/R_Graphics_Exercise.ipynb
   cliburn/R_Graphics_Exercise_Solutions.ipynb
   cliburn/R_tidyverse_1.ipynb
   cliburn/R_tidyverse_2.ipynb
   cliburn/R_tidyverse_3.ipynb
-  cliburn/R_tidyyverse_Exercise.ipynb
   cliburn/R_tidyyverse_Exercise_Solutions.ipynb
 
+.. toctree::
+  :maxdepth: 2
+  :caption: R Statistical Analysis
+
+  cliburn/Statistical_Inference_01.ipynb
+  cliburn/Statistical_Inference_02_Solutions.ipynb
+  cliburn/Unsupervised_Learning.ipynb
+  cliburn/Supervised_Learning Solutions.ipynb
 
 Indices and tables
 ==================
