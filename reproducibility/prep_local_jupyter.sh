@@ -3,6 +3,11 @@ TARGET_DIR=${1:-hts2018}
 
 WORK_DIR=$TARGET_DIR/jovyan/work
 DATA_DIR=$TARGET_DIR/data/hts2018_pilot
+JUPYTER_DIR=$TARGET_DIR/jupyter-HTS-2018
+NOTEBOOK_DIR=$WORK_DIR/HTS2018-notebooks
+
+
+
 mkdir -p $WORK_DIR $DATA_DIR
 JUPYTER_PASWORD="dklf8FHidsah98gdpoadjsf"
 
@@ -17,8 +22,8 @@ DownloadData() {
 
 # Build Jupyter Docker Image
 BuildAndRunImage() {
-    git clone git@gitlab.oit.duke.edu:HTS2018/jupyter-HTS-2018.git $TARGET_DIR
-    docker build -t mccahill/jupyter-hts-2018 $TARGET_DIR/jupyter-HTS-2018
+    git clone git@gitlab.oit.duke.edu:HTS2018/jupyter-HTS-2018.git $JUPYTER_DIR
+    docker build -t mccahill/jupyter-hts-2018 $JUPYTER_DIR
     echo "docker run --name jupyter-hts-2018 \
       -e USE_HTTPS=yes \
       -d -p 9999:8888 \
@@ -30,10 +35,11 @@ BuildAndRunImage() {
     bash $TARGET_DIR/run
 }
 
-BuildAndRunImage &
+BuildAndRunImage
 DownloadData
 
-# Clone Notebook Repo
-git clone git@gitlab.oit.duke.edu:HTS2018/HTS2018-notebooks.git $WORK_DIR
+# # Clone Notebook Repo
+git clone git@gitlab.oit.duke.edu:HTS2018/HTS2018-notebooks.git $NOTEBOOK_DIR
 
+echo "JUPYTER URL is <https://localhost:9999>"
 echo "JUPYTER_PASWORD: $JUPYTER_PASWORD"
