@@ -13,6 +13,7 @@ JUPYTER_PASWORD="dklf8FHidsah98gdpoadjsf"
 
 DownloadData() {
     # Get data subset
+    # https://unix.stackexchange.com/a/76242
     # rsync  -avvzC --include="*/" --include='*.checksum' --include='35_MA_*.fastq.gz' --include='27_MA_*.fastq.gz' --exclude="*" vcm3:/tmp/hts2018/Granek_4837_180427A5 $DATA_DIR
     rsync  -avvzC --include="*/" --include='*.checksum' --include='35_MA_*.fastq.gz' --exclude="*" vcm3:/tmp/hts2018/Granek_4837_180427A5 $DATA_DIR
     # md5sum -vc Granek_4837_180427A5/Granek_4837_180427A5.checksum 
