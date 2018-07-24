@@ -13,9 +13,8 @@ JUPYTER_PASWORD="dklf8FHidsah98gdpoadjsf"
 
 DownloadData() {
     # Get data subset
-    rsync -v --progress --stats vcm3:/tmp/hts2018/Granek_4837_180427A5/Granek_4837_180427A5.checksum $DATA_DIR
-    rsync -v --progress --stats vcm3:/tmp/hts2018/Granek_4837_180427A5/27_MA_* $DATA_DIR
-    rsync -v --progress --stats vcm3:/tmp/hts2018/Granek_4837_180427A5/35_MA_*.fastq.gz $DATA_DIR
+    # rsync  -avvzC --include="*/" --include='*.checksum' --include='35_MA_*.fastq.gz' --include='27_MA_*.fastq.gz' --exclude="*" vcm3:/tmp/hts2018/Granek_4837_180427A5 $DATA_DIR
+    rsync  -avvzC --include="*/" --include='*.checksum' --include='35_MA_*.fastq.gz' --exclude="*" vcm3:/tmp/hts2018/Granek_4837_180427A5 $DATA_DIR
     # md5sum -vc Granek_4837_180427A5/Granek_4837_180427A5.checksum 
     # md5sum -vc Granek_4837_180427A5/Granek_4837_180427A5.checksum | grep -v open
 }
@@ -24,14 +23,15 @@ DownloadData() {
 BuildAndRunImage() {
     git clone git@gitlab.oit.duke.edu:HTS2018/jupyter-HTS-2018.git $JUPYTER_DIR
     docker build -t mccahill/jupyter-hts-2018 $JUPYTER_DIR
-    docker run --name jupyter-hts-2018 \
+    echo "docker run --name jupyter-hts-2018 \
       -e USE_HTTPS=yes \
       -d -p 9999:8888 \
       -e PASSWORD="$JUPYTER_PASWORD" \
-      -v ${DATA_DIR}:/data \
+      -v $(dirname ${DATA_DIR}):/data \
       -v ${WORK_DIR}:/home/jovyan/work \
       -e NB_UID=1000 \
-      mccahill/jupyter-hts-2018
+      mccahill/jupyter-hts-2018" > $TARGET_DIR/run_jupyter-hts-2018.sh
+    bash $TARGET_DIR/run_jupyter-hts-2018.sh
 }
 
 BuildAndRunImage
