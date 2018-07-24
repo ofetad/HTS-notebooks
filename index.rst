@@ -36,6 +36,7 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   :maxdepth: 2
   :caption: Bioinformatics
 
+  bioinformatics/2018_bioinf_toc.ipynb
   bioinformatics/prep_nb/anon_metadata.ipynb
   bioinformatics/prep_nb/check_kouros_rpackages.ipynb
   bioinformatics/prep_nb/investigate_rrna_proportion.ipynb
@@ -44,6 +45,28 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   bioinformatics/fastqc.ipynb
   bioinformatics/genome_prep.ipynb
   bioinformatics/mapping.ipynb
+  bioinformatics/quality_scores.ipynb
+  bioinformatics/bash_functions.ipynb
+  bioinformatics/bioinf_hands_on_1.ipynb
+  bioinformatics/bioinf_hands_on_2.ipynb
+  bioinformatics/bioinf_hands_on_3.ipynb
+  bioinformatics/counting.ipynb
+  bioinformatics/data_provenance.ipynb
+  bioinformatics/demultiplex.ipynb
+  bioinformatics/fastq_intro.ipynb
+  bioinformatics/fastq_trimming.ipynb
+  bioinformatics/fastqc.ipynb
+  bioinformatics/genome_prep.ipynb
+  bioinformatics/glob_loop.ipynb
+  bioinformatics/igv_shorter_introns.ipynb
+  bioinformatics/igv_visualization.ipynb
+  bioinformatics/loop_pipeline.ipynb
+  bioinformatics/making_a_pipeline.ipynb
+  bioinformatics/making_generic_commands.ipynb
+  bioinformatics/mapping.ipynb
+  bioinformatics/multifastq_loop_pipeline.ipynb
+  bioinformatics/paired_data_pipeline.ipynb
+  bioinformatics/prep_for_full_run.ipynb
   bioinformatics/quality_scores.ipynb
 
 .. toctree::
@@ -58,7 +81,7 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   cliburn/R_tidyverse_1.ipynb
   cliburn/R_tidyverse_2.ipynb
   cliburn/R_tidyverse_3.ipynb
-  cliburn/R_tidyyverse_Exercise_Solutions.ipynb
+  cliburn/cliburn/R_tidyverse_Exercise_Solutions.ipynb
 
 .. toctree::
   :maxdepth: 2
@@ -66,6 +89,7 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
 
   cliburn/Statistical_Inference_01.ipynb
   cliburn/Statistical_Inference_02_Solutions.ipynb
+  cliburn/Unsupervised_And_Supervised_Learning.ipynb
   cliburn/Unsupervised_Learning.ipynb
   cliburn/Supervised_Learning Solutions.ipynb
 
