@@ -34,11 +34,12 @@ BuildAndRunImage() {
     bash $TARGET_DIR/run_jupyter-hts-2018.sh
 }
 
-BuildAndRunImage
-DownloadData
-
 # # Clone Notebook Repo
 git clone git@gitlab.oit.duke.edu:HTS2018/HTS2018-notebooks.git $NOTEBOOK_DIR
+
+DownloadData
+
+BuildAndRunImage
 
 printf "\n\nJUPYTER URL is <https://localhost:9999>\n"
 printf "JUPYTER_PASWORD: $JUPYTER_PASWORD\n\n"
