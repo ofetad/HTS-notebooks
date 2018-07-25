@@ -37,4 +37,8 @@ Biostatistics
 - :download:`Unsuperviseed Learning handout <slides/stat-unsupervised-handout.pdf>`
 - :download:`Supervised Learning <slides/stat-supervised.pdf>`
 - :download:`Supervised Learning handout <slides/stat-supervised-handout.pdf>`
+- :download:`Count Models <slides/stat-count-model.pdf>`
+- :download:`count Models handout <slides/stat-stat-count-model-handout.pdf>`
+- :download:`Multiple Testing <slides/stat-multipletesting.pdf>`
+- :download:`Multiple Testing handout <slides/stat-multipletesting-handout.pdf>`
 

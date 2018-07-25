@@ -71,6 +71,14 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
 
 .. toctree::
   :maxdepth: 2
+  :caption: Analysis of Pilot Data
+
+  pilot/01_Read_Scores.ipynb
+  pilot/02_Plot_Counts.ipynb
+  pilot/03_Compare_Gene_Expression.ipynb
+
+.. toctree::
+  :maxdepth: 2
   :caption: R Graphics and Data Manipulation
 
   janice/3_IntroductionToR.ipynb 
@@ -92,6 +100,14 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   cliburn/Unsupervised_And_Supervised_Learning.ipynb
   cliburn/Unsupervised_Learning.ipynb
   cliburn/Supervised_Learning Solutions.ipynb
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Biomedical Informatics
+
+  biomedical_informatics/06_process_pathway_info.ipynb
+  biomedical_informatics/07_Pathway_Analysis_and_Exploration.ipynb
+
 
 Indices and tables
 ==================
