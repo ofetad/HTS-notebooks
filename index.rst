@@ -103,6 +103,12 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
 
 .. toctree::
   :maxdepth: 2
+  :caption: Bioconductor
+
+  janice/4_Rlibraries_and_bioconductor.ipynb
+
+.. toctree::
+  :maxdepth: 2
   :caption: Biomedical Informatics
 
   biomedical_informatics/06_process_pathway_info.ipynb
