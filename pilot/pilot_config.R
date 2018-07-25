@@ -14,6 +14,6 @@ OUTDIR <- file.path(CURDIR, "out")
 IMGDIR <- file.path(CURDIR, "img")
 
 # Metadata (metadtfile)
-METADTFILE <- "~/work/HTS2018-notebooks/josh/info/2018_pilot_metadata.tsv"
+METADTFILE <- "~/work/HTS2018-notebooks/josh/info/2018_pilot_metadata_anon.tsv"
 
 
