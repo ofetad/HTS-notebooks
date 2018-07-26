@@ -36,38 +36,41 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   :maxdepth: 2
   :caption: Bioinformatics
 
-  bioinformatics/2018_bioinf_toc.ipynb
-  bioinformatics/prep_nb/anon_metadata.ipynb
-  bioinformatics/prep_nb/check_kouros_rpackages.ipynb
-  bioinformatics/prep_nb/investigate_rrna_proportion.ipynb
-  bioinformatics/prep_nb/star_2018_pilot.ipynb  bioinformatics/fastq_intro.ipynb
-  bioinformatics/fastq_trimming.ipynb
-  bioinformatics/fastqc.ipynb
-  bioinformatics/genome_prep.ipynb
-  bioinformatics/mapping.ipynb
-  bioinformatics/quality_scores.ipynb
-  bioinformatics/bash_functions.ipynb
-  bioinformatics/bioinf_hands_on_1.ipynb
-  bioinformatics/bioinf_hands_on_2.ipynb
-  bioinformatics/bioinf_hands_on_3.ipynb
-  bioinformatics/counting.ipynb
-  bioinformatics/data_provenance.ipynb
-  bioinformatics/demultiplex.ipynb
+  Week 2, Day 5 (7/13/2018)
   bioinformatics/fastq_intro.ipynb
-  bioinformatics/fastq_trimming.ipynb
-  bioinformatics/fastqc.ipynb
-  bioinformatics/genome_prep.ipynb
-  bioinformatics/glob_loop.ipynb
-  bioinformatics/igv_shorter_introns.ipynb
-  bioinformatics/igv_visualization.ipynb
-  bioinformatics/loop_pipeline.ipynb
-  bioinformatics/making_a_pipeline.ipynb
-  bioinformatics/making_generic_commands.ipynb
-  bioinformatics/mapping.ipynb
-  bioinformatics/multifastq_loop_pipeline.ipynb
-  bioinformatics/paired_data_pipeline.ipynb
-  bioinformatics/prep_for_full_run.ipynb
   bioinformatics/quality_scores.ipynb
+  bioinformatics/fastqc.ipynb
+  bioinformatics/fastq_trimming.ipynb
+  bioinformatics/genome_prep.ipynb
+  bioinformatics/mapping.ipynb
+  bioinformatics/bioinf_hands_on_1.ipynb
+
+  Week 4, Day 1 (7/23/2018)
+  bioinformatics/counting.ipynb
+  bioinformatics/paired_data_pipeline.ipynb
+  bioinformatics/making_generic_commands.ipynb
+  bioinformatics/making_a_pipeline.ipynb
+  bioinformatics/loop_pipeline.ipynb
+  bioinformatics/multifastq_loop_pipeline.ipynb
+  bioinformatics/glob_loop.ipynb
+  bioinformatics/bioinf_hands_on_2.ipynb 
+
+  Week 4, Day 2 (7/24/2018)
+  bioinformatics/igv_visualization.ipynb
+  bioinformatics/igv_shorter_introns.ipynb
+  bioinformatics/bioinf_hands_on_3.ipynb 
+
+  Appendix
+  bioinformatics/demultiplex.ipynb
+  bioinformatics/bash_functions.ipynb
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Analysis of Pilot Data
+
+  pilot/01_Read_Scores.ipynb
+  pilot/02_Plot_Counts.ipynb
+  pilot/03_Compare_Gene_Expression.ipynb
 
 .. toctree::
   :maxdepth: 2
@@ -92,6 +95,20 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   cliburn/Unsupervised_And_Supervised_Learning.ipynb
   cliburn/Unsupervised_Learning.ipynb
   cliburn/Supervised_Learning Solutions.ipynb
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Bioconductor
+
+  janice/4_Rlibraries_and_bioconductor.ipynb
+
+.. toctree::
+  :maxdepth: 2
+  :caption: Biomedical Informatics
+
+  biomedical_informatics/06_process_pathway_info.ipynb
+  biomedical_informatics/07_Pathway_Analysis_and_Exploration.ipynb
+
 
 Indices and tables
 ==================
