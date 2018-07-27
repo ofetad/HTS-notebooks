@@ -11,6 +11,11 @@ DEFAULT_LOCALBASE="$HOME/test"
 # # ================================================================================
 # # ================================================================================
 
+# Define Text colors
+MAGENTA=$(tput setaf 5)
+NORMAL=$(tput sgr0)
+
+
 #### Run as:
 : <<'RUN_AS_NOTE'
 ./download_core_data.sh SEQCORE_EMAIL OUTDIR
@@ -29,14 +34,10 @@ if [ "$#" -eq 2 -o "$#" -eq 3 ]; then
     if [ ! -f "$EMAIL_FILE" ]; then
 	statusMessage "EMAIL_FILE is not a regular file: $EMAIL_FILE."
 	exit 2
-    elif [ ! -f "$MAP_FILE" ]; then
-	statusMessage "MAP_FILE is not a regular file: $MAP_FILE."
-	exit 2
-    else
-	statusMessage "EMAIL_FILE and MAP_FILE look OK!"
+	statusMessage "EMAIL_FILE looks OK!"
     fi
 else
-    statusMessage "Run as: $0 EMAIL_FILE MAP_FILE [OUTPUT_DIRECTORY]"
+    statusMessage "Run as: $0 EMAIL_FILE [OUTPUT_DIRECTORY]"
     exit 2
 fi
 
@@ -45,16 +46,16 @@ PASS=`awk '/Password: /{print $NF}' "$EMAIL_FILE"`
 REMOTEDIR=`awk '/Your data is under /{print $NF}' "$EMAIL_FILE"`
 URL=`awk '/sftp server name: /{print $NF}' "$EMAIL_FILE"`
 REPORT=`awk '/See your report at: /{print $NF}' "$EMAIL_FILE"`
-# echo "USER:----${USER}----"
-# echo "PASS:----${PASS}----"
-# echo "REMOTEDIR:----${REMOTEDIR}----"
-# echo "URL:----${URL}----"
-# echo "REPORT:----${REPORT}----"
+echo "USER:----${USER}----"
+echo "PASS:----${PASS}----"
+echo "REMOTEDIR:----${REMOTEDIR}----"
+echo "URL:----${URL}----"
+echo "REPORT:----${REPORT}----"
 
 PROTOCOL="sftp"
 LOCALDIR="$LOCALBASE/$(basename $REMOTEDIR)"
 mkdir -p $LOCALDIR
-
+echo "mirror $REMOTEDIR $LOCALDIR"
 
 if [ ! -e "$LOCALDIR/$(basename $REMOTEDIR).checksum" ]; then
 statusMessage "Downloading data from server . . ."
