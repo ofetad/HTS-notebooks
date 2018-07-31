@@ -2,9 +2,15 @@
 library(tidyverse)
 library(foreach)
 library(stringr)
+
+library(DESeq2)
+library(tools)
+library(limma)
+library(qvalue)
+
 library(ggplot2)
 library(RColorBrewer)
-library(DESeq2)
+library(gridExtra)
 library(dendextend)
 
 # set directories
