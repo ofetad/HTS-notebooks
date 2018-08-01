@@ -5,13 +5,13 @@ export THREADS=1
 export MAX_JOBS=6
 
 # Input
-export DATA_BASE="/data/hts2018_pilot"
-export RAW_FASTQS="$DATA_BASE/Granek_4837_180427A5"
+export DATA_BASE="/data/hts2018_course"
+export RAW_FASTQS="$DATA_BASE/Granek_5003_180726A5"
 export INFO="../info"
 export ADAPTERS="$INFO/neb_E7600_adapters_withrc.fasta"
 
 # Output
-export CUROUT=$HOME/work/scratch/2018_full_pilot
+export CUROUT=$HOME/work/scratch/hts2018_course
 export TRIMMED=$CUROUT/trimmed_fastqs
 export GENOME_DIR=$CUROUT/genome
 export STAR_OUT=$CUROUT/star_out
