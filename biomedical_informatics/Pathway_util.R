@@ -1,14 +1,14 @@
-get_geneset_name <- function(pathid, mygenesets = genesets_cne_h99){
-    id <- grep("ec00010", names(genesets_cne_h99), value = TRUE)
+get_gset_name_from_id <- function(pathid, mygenesets){
+    id <- grep(pathid, names(genesets_cne_h99), value = TRUE)
     return(id)
 }
 
-get_geneset_lst <- function(pathid, mygenesets = genesets_cne_h99){
-    id <- get_geneset_name(pathid, mygenesets = mygenesets)
+get_gset_lst_from_id <- function(pathid, mygenesets){
+    id <- get_gset_name_from_id(pathid, mygenesets)
     return(mygenesets[[id]])
 }
 
-get_geneset_id <- function(pathname, mygenesets){
+get_gset_idx_from_name <- function(pathname, mygenesets){
     pathname_all <- names(mygenesets)
     lst <- lapply(pathname, function(x){
         return( grep(pattern = x, pathname_all, ignore.case = TRUE) )
