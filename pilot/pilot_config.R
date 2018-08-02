@@ -14,6 +14,8 @@ library(RColorBrewer)
 library(gridExtra)
 library(dendextend)
 
+library(plotly)
+
 # set directories
 DATDIR <- "/data/hts2018_pilot/star_counts"
 CURDIR <- "/home/jovyan/work/scratch/analysis_output"
