@@ -16,3 +16,18 @@ get_gset_idx_from_name <- function(pathname, mygenesets){
     idx <- Reduce(f = intersect, x = lst)
     return(idx)
 }
+
+ortholog_mapping <- function(vec_num, dat_map, from, to){
+    dat <- data.frame(
+        id   = names(vec_num),
+        value = vec_num)
+    colnames(dat) <- c(from, "value")
+    dat <- dat %>% 
+        left_join(., dat_map, by = from) %>%
+        na.omit %>%
+        group_by(!!rlang::sym(to)) %>%
+        summarize(value = mean(value))
+        
+    return(dat)
+}
+ 
