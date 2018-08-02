@@ -1,10 +1,13 @@
 library(tidyverse)
 library(stringr)
-library(pathview)
-library(gage)
+
 library(DESeq2)
 library(pheatmap)
-library(IRdisplay)
+
+library(gage)
+
+#library(pathview)
+#library(IRdisplay)
 
 CURDIR <- path.expand("~/work/scratch/analysis_output")
 OUTDIR <- file.path(CURDIR, "out")
