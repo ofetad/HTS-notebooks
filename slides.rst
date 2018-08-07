@@ -12,7 +12,7 @@ Wet Lab
 ---------
 
 - :download:`Lab Groups <wetlab/lab_groups.pdf>`
-- :download:`Reproducibility <slides/0706_HTAlabreproducibility.pdf>`
+- :download:`Lab Reproducibility <slides/0706_HTAlabreproducibility.pdf>`
 - :download:`Introduction to Molecular Biology <wetlab/Molecular_Biology_Lab_Intro.pdf>`
 - :download:`RNA-Seq Sample Preparation Theory<slides/0706_rnaseq_prep.pdf>`
 - :download:`NEBNext® UltraTM II Directional RNA Library Prep Kit for Illumina® <wetlab/manualE7760v1_trimmed_for_course.pdf>`
@@ -23,6 +23,9 @@ Bioinformatics
 ---------------
 
 - :download:`Overview <slides/0713_bioinformatics_overview.pdf>`
+- :download:`Short Read Alignment <slides/0723_ShortReadAlignment.pdf>`
+- :download:`Microbiome Analysis <slides/0802_microbiome_analysis_overview.pdf>`
+
 
 Biostatistics
 ---------------
@@ -43,13 +46,13 @@ Biostatistics
 - :download:`Multiple Testing handout <slides/stat-multipletesting-handout.pdf>`
 - :download:`GLM models <slides/stat-GLM-model-RNA-Seq.pdf>`
 - :download:`GLM models handout <slides/stat-GLM-model-RNA-Seq-handout.pdf>`
+- :download:`Interactions handout <slides/stat-interaction-handout.pdf>`
 - :download:`ROC <slides/stat-ROC.pdf>`
+- :download:`Interactions <slides/stat-interaction.pdf>`
 - :download:`ROC handout <slides/stat-ROC-handout.pdf>`
-- :download:`TC <slides/stat-TC.pdf>`
-- :download:`TC handout <slides/stat-TC-handout.pdf>`
+- :download:`Time Course <slides/stat-TC.pdf>`
+- :download:`Time Course handout <slides/stat-TC-handout.pdf>`
 - :download:`Gene set analysis <slides/stat-geneset.pdf>`
 - :download:`Gene set analysis handout <slides/stat-geneset-handout.pdf>`
-- :download:`Interactions <slides/stat-interaction.pdf>`
-- :download:`Interactions handout <slides/stat-interaction-handout.pdf>`
 - :download:`Networks <slides/stat-network.pdf>`
 - :download:`Networks handout <slides/stat-network-handout.pdf>`
