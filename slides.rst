@@ -41,4 +41,15 @@ Biostatistics
 - :download:`count Models handout <slides/stat-stat-count-model-handout.pdf>`
 - :download:`Multiple Testing <slides/stat-multipletesting.pdf>`
 - :download:`Multiple Testing handout <slides/stat-multipletesting-handout.pdf>`
-
+- :download:`GLM models <slides/stat-GLM-model-RNA-Seq.pdf>`
+- :download:`GLM models handout <slides/stat-GLM-model-RNA-Seq-handout.pdf>`
+- :download:`ROC <slides/stat-ROC.pdf>`
+- :download:`ROC handout <slides/stat-ROC-handout.pdf>`
+- :download:`TC <slides/stat-TC.pdf>`
+- :download:`TC handout <slides/stat-TC-handout.pdf>`
+- :download:`Gene set analysis <slides/stat-geneset.pdf>`
+- :download:`Gene set analysis handout <slides/stat-geneset-handout.pdf>`
+- :download:`Interactions <slides/stat-interaction.pdf>`
+- :download:`Interactions handout <slides/stat-interaction-handout.pdf>`
+- :download:`Networks <slides/stat-network.pdf>`
+- :download:`Networks handout <slides/stat-network-handout.pdf>`
