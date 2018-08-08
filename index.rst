@@ -63,14 +63,17 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   Appendix
   bioinformatics/demultiplex.ipynb
   bioinformatics/bash_functions.ipynb
-
+  wetlab/magnetic_racks.ipynb
+  
 .. toctree::
   :maxdepth: 2
   :caption: Analysis of Pilot Data
 
-  pilot/01_Read_Scores.ipynb
+  pilot/00_setup.ipynb
+  pilot/01_Read_Counts.ipynb
   pilot/02_Plot_Counts.ipynb
-  pilot/03_Compare_Gene_Expression.ipynb
+  pilot/03_Intro_to_DESeq.ipynb
+  pilot/04_Pilot_DESeq2_Interaction.ipynb
 
 .. toctree::
   :maxdepth: 2
