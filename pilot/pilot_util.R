@@ -30,7 +30,7 @@ myinteractplot <- function(mydds, geneid, my_xaxis) {
     # Args:
     #   mydds (DESeqTransform object): your input DESeq object
     #   geneid (Charater): the second count data
-    #   my_xaxis (Charater): the x axis ("media" or "strain")
+    #   my_xaxis (Charater): the x axis (ex: "media" or "strain")
     #
     # Returns:
     #   (ggplot object) the final plot
@@ -51,11 +51,9 @@ myinteractplot <- function(mydds, geneid, my_xaxis) {
     mytheme <- theme_bw()
     mytitle <- ggtitle(geneid)
     
-    if (my_xaxis == "strain"){
-        gp <- ggplot(genedat, aes(x = Strain, y = value, color = Media)) + mygeom + mytheme + mypal + mytitle
-    } else {
-        gp <- ggplot(genedat, aes(x = Media, y = value, color = Strain)) + mygeom + mytheme + mypal + mytitle
-    }
+    my_xaxis <- rlang::sym(my_xaxis)
+    gp <- ggplot(genedat, aes(x = !!my_xaxis, y = value, color = Media)) + mygeom + mytheme + mypal + mytitle
+    
     return(gp)   
 }
 
