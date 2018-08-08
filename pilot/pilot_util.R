@@ -60,7 +60,8 @@ myinteractplot <- function(mydds, geneid, my_xaxis) {
 }
 
 genefromdds <- function(mydds, geneid, linkid) {
-    assay(mydds) %>%
+    #assay(mydds) %>%
+    counts(mydds, normalize = TRUE) %>%
         as_tibble(rownames="gene") %>%
         filter(gene==geneid) %>%
         gather(!!linkid, value, -gene) %>%
@@ -82,25 +83,28 @@ myDEplot <- function(mydds, geneid, myfactor, linkid, dots = FALSE, addcolor = F
     genedat <- genefromdds(mydds, geneid, linkid)
 
 
-    mygeom <-  geom_boxplot(notch = FALSE)
+    #mygeom <-  geom_boxplot(notch = FALSE)
     mypal <- scale_colour_manual(values = brewer.pal(5, "Set1"))
     mytheme <- theme_bw()
 
-    myfactor<-  rlang::enquo(myfactor)
+    #myfactor<-  rlang::enquo(myfactor)
+    myfactor <- rlang::sym(myfactor)
     genedat <- genedat %>%
         dplyr::mutate(boxfactor = as_factor(!!myfactor))
     
-
-    p <- ggplot(genedat, aes(y=value, x = boxfactor))+
-        mygeom + mytheme + mypal + labs(y = geneid, x = myfactor)
-
+    p <- ggplot(genedat, aes(y=value, x = boxfactor)) +
+        mytheme + mypal + labs(y = geneid, x = myfactor)
+        #mygeom + mytheme + mypal + labs(y = geneid, x = myfactor)
+    
     if(dots) {
-        p <- p + geom_point()
-    }
-
-    if(addcolor) {
-        mycolor <- enquo(mycolor)
-        p <- p + geom_point(aes_(color = mycolor))
+         if(addcolor) {
+            mycolor <- enquo(mycolor)
+            p <- p + geom_jitter(aes(color = mycolor), width = 0.1)
+         } else {
+            p <- p + geom_jitter(width = 0.1)
+         }
+    } else {
+        p <- p + geom_boxplot(notch = FALSE)
     }
     
     return(p)
