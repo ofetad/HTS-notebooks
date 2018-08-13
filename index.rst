@@ -112,6 +112,11 @@ Source materials can bd cloned from the `HTS2018 GitLab Repository <https://gitl
   biomedical_informatics/06_process_pathway_info.ipynb
   biomedical_informatics/07_Pathway_Analysis_and_Exploration.ipynb
 
+.. toctree::
+  :maxdepth: 2
+  :caption: Post-course Resources
+
+  reproducibility/post_course_resources.ipynb
 
 Indices and tables
 ==================
