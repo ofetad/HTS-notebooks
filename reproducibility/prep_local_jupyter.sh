@@ -1,5 +1,5 @@
 set -u
-TARGET_DIR=${1:-"hts2018"}
+TARGET_DIR=`readlink -f ${1:-"hts2018"}`
 GIT_METHOD=${2:-"https"}
 
 if [ $# -lt 1 ]; then
