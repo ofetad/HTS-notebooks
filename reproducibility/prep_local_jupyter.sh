@@ -64,8 +64,12 @@ RunImage() {
     # export JUPYTER_PASSWORD="`shuf -zer -n20  {A..Z} {a..z} {0..9}`"
     export JUPYTER_PASSWORD=`shuf -zer -n30  {A..Z} {a..z} {0..9}`
     # export JUPYTER_PASSWORD="blahblahblah123994t7"
-    printf "\n\nJupyter URL:\t\thttps://`hostname -A`:${JUPYTER_PORT}/\n" | tr -d ' ' > $SESSION_INFO_FILE
-    printf "OR\n            \t\thttps://localhost:${JUPYTER_PORT}/\n" >> $SESSION_INFO_FILE
+    printf "\n\nJupyter URL should be one of the following. If running on your local machine, it will be the first, if running on a server (e.g. Duke VCM) it should be the second
+    printf "\n\nJupyter URL should be one of the following.\n" > $SESSION_INFO_FILE
+    printf "If running on your local machine, it will be:\n"  >> $SESSION_INFO_FILE
+    printf "\t\thttps://localhost:${JUPYTER_PORT}/\n" >> $SESSION_INFO_FILE
+    printf "\nIf running on a server (e.g. Duke VCM) it should be:\n"  >> $SESSION_INFO_FILE
+    printf "\t\thttps://`hostname -A`:${JUPYTER_PORT}/\n" | tr -d ' ' >> $SESSION_INFO_FILE
     printf "\nJupyter Username:\t$USER\n"  >> $SESSION_INFO_FILE
     printf "Jupyter Password:\t$JUPYTER_PASSWORD\n" >> $SESSION_INFO_FILE
 
