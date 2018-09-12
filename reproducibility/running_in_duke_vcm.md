@@ -5,7 +5,6 @@
 2. SSH to your new VM, and do all the following on the VM
 
 3. Run the following commands to install Docker
-
 ```
 sudo apt-get remove docker docker-engine docker.io
 sudo apt-get update
@@ -19,11 +18,7 @@ sudo apt-get update
 sudo apt-get install -y --no-install-recommends docker-ce
 ```
 
-4. Run the following to confirm that Docker is working
-```
-sudo docker run hello-world
-```
-It should print this:
+4. Run the following to confirm that Docker is working `sudo docker run hello-world` It should print this:
 ```
 Hello from Docker!
 This message shows that your installation appears to be working correctly.
@@ -54,19 +49,12 @@ sudo gpasswd -a $USER docker
 newgrp docker
 ```
 
-6. Now run the following to be sure that worked (note that we are not using 'sudo' here)
-```
-docker run hello-world
-```
+6. Now run the following to be sure that worked (note that we are not using 'sudo' here) `docker run hello-world`
 
 7. Run the following to get the script that will download course material and the jupyter image
 ```
 wget https://gitlab.oit.duke.edu/HTS2018/HTS2018-notebooks/raw/master/reproducibility/prep_local_jupyter.sh
 ```
 
-8. Run the following to download course material and the jupyter image, and run it. 
-```
-bash prep_local_jupyter.sh hts2018
-```
-Follow the printed instructions for accessing the Jupyter instance running on your VM.
+8. Run `bash prep_local_jupyter.sh hts2018`  to download course material and the jupyter image, and run it. Follow the printed instructions for accessing the Jupyter instance running on your VM.
 
