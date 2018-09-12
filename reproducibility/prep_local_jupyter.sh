@@ -40,7 +40,7 @@ DownloadNotebooks() {
 
 
 # Build Jupyter Docker Image
-BuildAndRunImage() {
+BuildImage() {
     if [ $GIT_METHOD == "ssh" ] ; then
 	echo "Cloning jupyter-HTS-2018.git with ssh"
 	JUPYTER_GIT="git@gitlab.oit.duke.edu:HTS2018/jupyter-HTS-2018.git"
@@ -50,6 +50,13 @@ BuildAndRunImage() {
     fi
     git clone $JUPYTER_GIT $JUPYTER_DIR
     docker build -t mccahill/jupyter-hts-2018 $JUPYTER_DIR
+}
+
+PullImage() {
+    docker pull mccahill/jupyter-hts-2018
+}
+
+RunImage() {
     echo "docker run --name jupyter-hts-2018 \
       -e USE_HTTPS=yes \
       -d -p 9999:8888 \
@@ -72,7 +79,9 @@ fi
 
 
 DownloadNotebooks
-BuildAndRunImage
+# BuildImage
+PullImage
+RunImage
 
 printf "\n\nJUPYTER URL is <https://localhost:9999>\n"
 printf "JUPYTER_PASWORD: $JUPYTER_PASWORD\n\n"
