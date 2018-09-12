@@ -73,7 +73,6 @@ RunImage() {
     trap "{ rm -f $SESSION_INFO_FILE; }" EXIT
 
     # singularity run  --app rstudio $BIND_ARGS $SINGULARITY_IMAGE --auth-none 0 --auth-pam-helper rstudio_auth --www-port $JUPYTER_PORT
-    echo "JUPYTER_PASSWORD: $JUPYTER_PASSWORD"
     echo "docker run --name ${DOCKER_IMAGE} \
       -e USE_HTTPS=yes \
       -d -p ${JUPYTER_PORT}:8888 \
@@ -83,7 +82,6 @@ RunImage() {
       -e NB_UID=1000 \
       mccahill/${DOCKER_IMAGE}" > $TARGET_DIR/run_${DOCKER_IMAGE}.sh
     bash $TARGET_DIR/run_${DOCKER_IMAGE}.sh
-    echo "JUPYTER_PASSWORD: $JUPYTER_PASSWORD"
 }
 
 # # Clone Notebook Repo
