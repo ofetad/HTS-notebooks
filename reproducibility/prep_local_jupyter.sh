@@ -16,7 +16,7 @@ NOTEBOOK_DIR=$WORK_DIR/HTS2018-notebooks
 
 rm -rf $NOTEBOOK_DIR $JUPYTER_DIR
 mkdir -p $WORK_DIR $DATA_DIR
-JUPYTER_PASWORD="dklf8FHidsah98gdpoadjsf"
+# JUPYTER_PASSWORD="dklf8FHidsah98gdpoadjsf"
 
 DownloadData() {
     # Get data subset
@@ -61,7 +61,9 @@ RunImage() {
     JUPYTER_PORT="9999"
     SESSION_INFO_FILE="session_info_${DOCKER_IMAGE}_${JUPYTER_PORT}.txt"
     echo $SESSION_INFO_FILE
-    export JUPYTER_PASSWORD="`shuf -zer -n20  {A..Z} {a..z} {0..9}`"
+    # export JUPYTER_PASSWORD="`shuf -zer -n20  {A..Z} {a..z} {0..9}`"
+    export JUPYTER_PASSWORD=`shuf -zer -n30  {A..Z} {a..z} {0..9}`
+    # export JUPYTER_PASSWORD="blahblahblah123994t7"
     printf "\n\nJupyter URL:\t\thttps://`hostname -A`:${JUPYTER_PORT}/\n" | tr -d ' ' > $SESSION_INFO_FILE
     printf "OR\n            \t\thttps://localhost:${JUPYTER_PORT}/\n" >> $SESSION_INFO_FILE
     printf "\nJupyter Username:\t$USER\n"  >> $SESSION_INFO_FILE
@@ -71,16 +73,17 @@ RunImage() {
     trap "{ rm -f $SESSION_INFO_FILE; }" EXIT
 
     # singularity run  --app rstudio $BIND_ARGS $SINGULARITY_IMAGE --auth-none 0 --auth-pam-helper rstudio_auth --www-port $JUPYTER_PORT
-    
+    echo "JUPYTER_PASSWORD: $JUPYTER_PASSWORD"
     echo "docker run --name ${DOCKER_IMAGE} \
       -e USE_HTTPS=yes \
       -d -p ${JUPYTER_PORT}:8888 \
-      -e PASSWORD="$JUPYTER_PASWORD" \
+      -e PASSWORD="$JUPYTER_PASSWORD" \
       -v $(dirname ${DATA_DIR}):/data \
       -v ${WORK_DIR}:/home/jovyan/work \
       -e NB_UID=1000 \
       mccahill/${DOCKER_IMAGE}" > $TARGET_DIR/run_${DOCKER_IMAGE}.sh
     bash $TARGET_DIR/run_${DOCKER_IMAGE}.sh
+    echo "JUPYTER_PASSWORD: $JUPYTER_PASSWORD"
 }
 
 # # Clone Notebook Repo
