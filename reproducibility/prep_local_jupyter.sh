@@ -57,15 +57,30 @@ PullImage() {
 }
 
 RunImage() {
-    echo "docker run --name jupyter-hts-2018 \
+    DOCKER_IMAGE="jupyter-hts-2018"
+    JUPYTER_PORT="9999"
+    SESSION_INFO_FILE="session_info_${DOCKER_IMAGE}_${JUPYTER_PORT}.txt"
+    echo $SESSION_INFO_FILE
+    export JUPYTER_PASSWORD="`openssl rand -base64 16 | colrm 20`"
+    printf "\n\nJupyter URL:\t\thttps://`hostname -A`:${JUPYTER_PORT}/\n" | tr -d ' ' > $SESSION_INFO_FILE
+    printf "OR\n            \t\thttps://localhost:${JUPYTER_PORT}/\n" >> $SESSION_INFO_FILE
+    printf "\nJupyter Username:\t$USER\n"  >> $SESSION_INFO_FILE
+    printf "Jupyter Password:\t$JUPYTER_PASSWORD\n" >> $SESSION_INFO_FILE
+
+    cat $SESSION_INFO_FILE
+    trap "{ rm -f $SESSION_INFO_FILE; }" EXIT
+
+    # singularity run  --app rstudio $BIND_ARGS $SINGULARITY_IMAGE --auth-none 0 --auth-pam-helper rstudio_auth --www-port $JUPYTER_PORT
+    
+    echo "docker run --name ${DOCKER_IMAGE} \
       -e USE_HTTPS=yes \
-      -d -p 9999:8888 \
+      -d -p ${JUPYTER_PORT}:8888 \
       -e PASSWORD="$JUPYTER_PASWORD" \
       -v $(dirname ${DATA_DIR}):/data \
       -v ${WORK_DIR}:/home/jovyan/work \
       -e NB_UID=1000 \
-      mccahill/jupyter-hts-2018" > $TARGET_DIR/run_jupyter-hts-2018.sh
-    bash $TARGET_DIR/run_jupyter-hts-2018.sh
+      mccahill/${DOCKER_IMAGE}" > $TARGET_DIR/run_${DOCKER_IMAGE}.sh
+    bash $TARGET_DIR/run_${DOCKER_IMAGE}.sh
 }
 
 # # Clone Notebook Repo
@@ -83,5 +98,3 @@ DownloadNotebooks
 PullImage
 RunImage
 
-printf "\n\nJUPYTER URL is <https://localhost:9999>\n"
-printf "JUPYTER_PASWORD: $JUPYTER_PASWORD\n\n"
