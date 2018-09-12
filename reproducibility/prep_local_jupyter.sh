@@ -61,7 +61,7 @@ RunImage() {
     JUPYTER_PORT="9999"
     SESSION_INFO_FILE="session_info_${DOCKER_IMAGE}_${JUPYTER_PORT}.txt"
     echo $SESSION_INFO_FILE
-    export JUPYTER_PASSWORD="`openssl rand -base64 16 | colrm 20`"
+    export JUPYTER_PASSWORD="`shuf -zer -n20  {A..Z} {a..z} {0..9}`"
     printf "\n\nJupyter URL:\t\thttps://`hostname -A`:${JUPYTER_PORT}/\n" | tr -d ' ' > $SESSION_INFO_FILE
     printf "OR\n            \t\thttps://localhost:${JUPYTER_PORT}/\n" >> $SESSION_INFO_FILE
     printf "\nJupyter Username:\t$USER\n"  >> $SESSION_INFO_FILE
