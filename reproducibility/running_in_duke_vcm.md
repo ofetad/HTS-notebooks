@@ -35,7 +35,7 @@ newgrp docker
 
 7. Run the following to get the script that will download course material and the jupyter image
 ```
-wget https://gitlab.oit.duke.edu/HTS2018/HTS2018-notebooks/raw/master/reproducibility/prep_local_jupyter.sh
+curl -O https://gitlab.oit.duke.edu/HTS2018/HTS2018-notebooks/raw/master/reproducibility/prep_local_jupyter.sh
 ```
 
 8. Run `bash prep_local_jupyter.sh hts2018`  to download course material and the jupyter image, and run it. Follow the printed instructions for accessing the Jupyter instance running on your VM.
