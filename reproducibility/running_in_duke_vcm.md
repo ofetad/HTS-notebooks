@@ -42,17 +42,17 @@ curl -O https://gitlab.oit.duke.edu/HTS2018/HTS2018-notebooks/raw/master/reprodu
 
 9. You will probably get one of the following warnings, depending on your browser, it is safe to ignore this
 
-- *Chrome*: "Your connection is not private"
+	- *Chrome*: "Your connection is not private"
+	  1. Click *ADVANCED*
+	  2. Click *Proceed to XXXXXXX (unsafe)*, where XXXXXXX is the URL of your VM
 
-1. Click *ADVANCED*
-2. Click *Proceed to XXXXXXX (unsafe)*, where XXXXXXX is the URL of your VM
+	- *Safari*: "This Connection Is Not Private"
+	  1. Click *Show Details*
+	  2. Click *visit this website*
+	  3. Click *Visit Website*
 
-- *Safari*: "This Connection Is Not Private"
-1. Click *Show Details*
-2. Click *visit this website*
-
-- *Firefox*: "Your connection is not secure"
-1. Click *ADVANCED*
-2. Click *Add Exception*
-3. Uncheck the box next to *Permanently store this exception*
-4. Click *Confirm Security Exception*
+	- *Firefox*: "Your connection is not secure"
+	  1. Click *ADVANCED*
+	  2. Click *Add Exception*
+	  3. Uncheck the box next to *Permanently store this exception*
+	  4. Click *Confirm Security Exception*
